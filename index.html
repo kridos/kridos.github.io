@@ -193,36 +193,69 @@
         <h2 class="heading">My <span>Projects</span><span class="animate scroll" style="--i:1;"></span></h2>
 
         <div class="projects-row">
-            <div class="project-box" onclick="window.open('https://github.com/kridos/project-1', '_blank')">
+
+            <div class="project-box" onclick="window.open('https://github.com/kridos/Handwritten_Digits_Neural_Network', '_blank')">
                 <div class="project-content">
-                    <h3>Project One</h3>
-                    <p>A web app that tracks allergy data in packaged items using barcode scanning and a clean UI.</p>
+
+                    <h3>MNIST Neural Network</h3>
+                    <p>A neural network built from scratch in Python using NumPy to recognize handwritten digits from the MNIST dataset (IN PROGRESS).</p>
+                </div>
+                <span class="animate scroll" style="--i:2;"></span>
+            </div>
+
+
+            <div class="project-box" onclick="window.open('https://github.com/KCheck25/FtcRobotController', '_blank')">
+                <div class="project-content">
+
+                    <h3>FRC 2024 Robot Code</h3>
+                    <p>A control system for the FRC 2024 Crescendo robot using Java and WPILib, featuring game-optimized logic and integrated sensor feedback.</p>
+
+                </div>
+                <span class="animate scroll" style="--i:3;"></span>
+            </div>
+
+            <div class="project-box" onclick="window.open('https://github.com/kridos/ScoutingApp2024', '_blank')">
+                <div class="project-content">
+
+                    <h3>Crescendo Scout </h3>
+                    <p>A mobile app for offline FRC scouting that collects, stores, and shares team data via QR codes for efficient analysis and collaboration.</p>
+                </div>
+                <span class="animate scroll" style="--i:4;"></span>
+            </div>
+        </div>
+
+        <div class="projects-row">
+            <div class="project-box" onclick="window.open('https://github.com/kridos/ScoutingReceiver2024', '_blank')">
+                <div class="project-content">
+                    <h3>Crescendo Receiver</h3>
+                    <p>A desktop app that scans QR codes from Crescendo Scout to compile, store, and display scouting data in a table for match strategy.</p>
                 </div>
 
                 <span class="animate scroll" style="--i:2;"></span>
 
             </div>
 
-            <div class="project-box" onclick="window.open('https://github.com/kridos/project-2', '_blank')">
+            <div class="project-box" onclick="window.open('https://github.com/kridos/WaForgeHackathon', '_blank')">
                 <div class="project-content">
-
-                    <h3>Project Two</h3>
-                    <p>A robotic task planner using Python and ROS to optimize item sorting in simulated warehouses.</p>
-
+                    <h3>FoodSpect App</h3>
+                    <p>A mobile app that scans barcodes and uses the Open Food Facts API to instantly flag allergens based on personalized user profiles.</p>
                 </div>
-                <span class="animate scroll" style="--i:3;"></span>
-            </div>
 
-            <div class="project-box" onclick="window.open('https://github.com/kridos/project-3', '_blank')">
+                <span class="animate scroll" style="--i:3;"></span>
+
+            </div>            
+
+            <div class="project-box" onclick="window.open('https://github.com/kridos/UnoFinal', '_blank')">
                 <div class="project-content">
 
-                    <h3>Project Three</h3>
-                    <p>Firmware for machine health monitoring using MQTT and AWS IoT Core, developed during my
-                        internship.
-                    </p>
+                    <h3>UNO</h3>
+                    <p>A Java-based UNO game built in Android Studio featuring multi-player gameplay or single-player gameplay with a bot for offline gameplay.</p>
+
                 </div>
                 <span class="animate scroll" style="--i:4;"></span>
             </div>
+
+            
         </div>
     </section>
 
@@ -301,15 +334,18 @@
     <section class="contact" id="contact">
         <h2 class="heading">Contact <span>Me!</span><span class="animate scroll" style="--i:1;"></span></h2>
 
-        <form action="#">
+        <form action="https://formsubmit.co/krishpdoshi@gmail.com" method="POST">
+
+            <input type="hidden" name="access_key" value="64730e17-42ea-48df-a3c3-60464b4a1a43">
+
             <div class="input-box">
                 <div class="input-field">
-                    <input type="text" placeholder="Full Name" required>
+                    <input type="text" name="name" placeholder="Full Name" required>
                     <span class="focus"></span>
                 </div>
 
                 <div class="input-field">
-                    <input type="text" placeholder="Email Address" required>
+                    <input type="text" name="email" placeholder="Email Address" required>
                     <span class="focus"></span>
                 </div>
 
@@ -331,7 +367,7 @@
             </div>
 
             <div class="textarea-field">
-                <textarea name="" id="" cols="30" rows="10" placeholder="Your Message" required></textarea>
+                <textarea name="" id="" cols="30" rows="10" name="message" placeholder="Your Message" required></textarea>
                 <span class="focus"></span>
 
                 <span class="animate scroll" style="--i:7;"></span>
