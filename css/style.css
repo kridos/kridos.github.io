@@ -87,9 +87,7 @@ section {
     display: flex;
     align-items: center;
     padding: 0 9%;
-    background: /*url('/images/home.jpg') no-repeat*/ var(--bg-color);
-    background-size: cover;
-    background-position: center;
+    background-color: black; /*Keep the rest of the screen black */
 }
 
 .home-content {
@@ -297,8 +295,8 @@ span {
 
 .about-img {
     position: relative;
-    width: 25rem;
-    height: 25rem;
+    width: 35rem;
+    height: 35rem;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -707,6 +705,10 @@ span {
 }
 
 /* ANIMATION RELOAD AND SCROLL */
+.home .animate {
+    background: black;
+}
+
 .animate {
     position: absolute;
     top: 0;
@@ -739,6 +741,7 @@ section:nth-child(odd) .animate.scroll,
 .footer .animate.scroll {
     background: var(--second-bg-color);
 }
+
 
 .education .education-box .animate.scroll {
     width: 105%;
