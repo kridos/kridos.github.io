@@ -2,7 +2,7 @@
 
 * {
     margin: 0;
-    padding:0;
+    padding: 0;
     box-sizing: border-box;
     text-decoration: none;
     border: none;
@@ -30,7 +30,7 @@ body {
 
 .header {
     position: fixed;
-    top:0;
+    top: 0;
     left: 0;
     width: 100%;
     padding: 2rem 9%;
@@ -61,7 +61,7 @@ body {
     font-size: 1.7rem;
     color: var(--text-color);
     font-weight: 500;
-    margin-left:3.5rem;
+    margin-left: 3.5rem;
     transition: .3s;
 }
 
@@ -73,9 +73,9 @@ body {
 #menu-icon {
     position: relative;
     font-size: 3.6rem;
-    color:var(--text-color);
+    color: var(--text-color);
     cursor: pointer;
-    display:none;
+    display: none;
 }
 
 section {
@@ -87,7 +87,6 @@ section {
     display: flex;
     align-items: center;
     padding: 0 9%;
-    background-color: black; /*Keep the rest of the screen black */
 }
 
 .home-content {
@@ -109,7 +108,6 @@ section {
 
 .home-content .text-animate {
     position: relative;
-    /*width: 32.8rem;*/
     width: 45.7rem;
 }
 
@@ -149,7 +147,7 @@ section {
 .home-content p {
     position: relative;
     font-size: 1.6rem;
-    margin:2rem 0 4rem;
+    margin: 2rem 0 4rem;
 }
 
 .btn-box {
@@ -170,7 +168,7 @@ section {
     background: var(--main-color);
     border: .2rem solid var(--main-color);
     border-radius: .8rem;
-    font-size:1.8rem;
+    font-size: 1.8rem;
     font-weight: 600;
     letter-spacing: .1 rem;
     color: var(--bg-color);
@@ -230,7 +228,7 @@ section {
     background: transparent;
     border: .2rem solid var(--main-color);
     border-radius: 50%;
-    font-size:20px;
+    font-size: 20px;
     color: var(--main-color);
     z-index: 1;
     overflow: hidden;
@@ -448,10 +446,132 @@ span {
 
 
 
-.skills {
+
+
+/* Projects Section */
+.projects {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     min-height: auto;
     padding-bottom: 7rem;
     background: var(--second-bg-color);
+}
+
+.projects .heading {
+    text-align: center;
+    font-size: 4.5rem;
+    margin-bottom: 5rem;
+    position: relative;
+}
+
+.projects-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3.5rem;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Updated .project-box .project-content */
+.project-box .project-content {
+    border: .2rem solid var(--main-color);
+    border-radius: 1rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--second-bg-color) 0%, #173b50 100%);
+    box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.35);
+
+    /* NEW: Make project-content fill the available height of its parent project-box */
+    flex-grow: 1; 
+
+    /* Keep its own flex properties for internal content layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to the top within project-content */
+    align-items: flex-start;
+    
+    /* Ensure its transitions are defined for hover effects */
+    transition: background .4s ease, border-color .4s ease; /* Ensure these are here */
+}
+
+.project-box {
+    position: relative;
+    padding: 2.5rem;
+    transition: transform .4s ease, box-shadow .4s ease;
+    cursor: pointer;
+    overflow: hidden;
+    
+    /* IMPORTANT: Keep these flex properties on project-box */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Will align content-box to top, but flex-grow will stretch it */
+    align-items: flex-start;
+}
+
+.project-box .project-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--second-bg-color) 0%, #173b50 100%); /* Match content background */
+    z-index: 2;
+    width: 100%;
+    transition: width 0.5s ease; /* Added ease for smoother reveal */
+    pointer-events: none;
+}
+
+/* When section is active (show-animate), hide the cover */
+.projects.show-animate .project-box .project-content::before {
+    width: 0;
+}
+
+/* Hover effects for the OUTER project-box */
+.project-box .project-content:hover {
+    transform: translateY(-1rem) scale(1.02);
+    box-shadow: 0 1.8rem 3rem rgba(0, 0, 0, 0.5);
+}
+
+/* Hover effects for the INNER project-content, triggered by hovering the OUTER project-box */
+.project-box .project-content:hover {
+    background: linear-gradient(135deg, var(--main-color) 0%, #008cc0 100%);
+    border-color: var(--main-color);
+}
+
+
+/* Project Title Styles */
+.project-box .project-content h3 { /* Added .project-content to selector for specificity */
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    transition: color 0.4s ease;
+}
+
+.project-box .project-content:hover h3 {
+    color: var(--bg-color);
+}
+
+/* Project Description Styles */
+.project-box .project-content p { /* Added .project-content to selector for specificity */
+    font-size: 1.6rem;
+    line-height: 1.7;
+    color: var(--text-color);
+    flex-grow: 1; /* This makes the paragraph expand to fill remaining space within .project-content */
+    transition: color 0.4s ease;
+}
+
+.project-box .project-content:hover p {
+    color: var(--bg-color);
+}
+
+/* Rest of your CSS (e.g., global .animate, keyframes, media queries) */
+/* (omitted for brevity, but keep them in your actual stylesheet) */
+
+.skills {
+    min-height: auto;
+    padding-bottom: 7rem;
 }
 
 .skills h2 {
@@ -497,7 +617,7 @@ span {
     left: 0;
     width: 0;
     height: 100%;
-    background: var(--bg-color);
+    background: var(--second-bg-color);
     z-index: -1;
     transition: .5s;
 }
@@ -570,6 +690,7 @@ span {
 .contact {
     min-height: auto;
     padding-bottom: 7rem;
+    background: var(--second-bg-color);
 }
 
 .contact h2 {
@@ -628,8 +749,8 @@ span {
 
 .contact form .input-box .input-field input:focus~.focus,
 .contact form .input-box .input-field input:valid~.focus,
-.contact form .textarea-field textarea:focus~.focus, 
-.contact form .textarea-field textarea:valid~.focus{
+.contact form .textarea-field textarea:focus~.focus,
+.contact form .textarea-field textarea:valid~.focus {
     width: 100%;
 }
 
@@ -705,10 +826,6 @@ span {
 }
 
 /* ANIMATION RELOAD AND SCROLL */
-.home .animate {
-    background: black;
-}
-
 .animate {
     position: absolute;
     top: 0;
@@ -737,7 +854,9 @@ span {
     animation: none;
 }
 
-section:nth-child(odd) .animate.scroll,
+section.about .animate.scroll,
+section.projects .animate.scroll,
+section.contact .animate.scroll,
 .footer .animate.scroll {
     background: var(--second-bg-color);
 }
@@ -749,7 +868,7 @@ section:nth-child(odd) .animate.scroll,
 
 .about.show-animate .animate.scroll,
 .education.show-animate .animate.scroll,
-.education.show-animate .education-box .animate.scroll,
+.projects.show-animate .animate.scroll,
 .skills.show-animate .animate.scroll,
 .contact.show-animate .animate.scroll,
 .footer.show-animate .animate.scroll {
@@ -804,7 +923,7 @@ section:nth-child(odd) .animate.scroll,
         width: 100%;
         padding: 1rem 4%;
         background: var(--main-color);
-        box-shadow: 0 .5rem 1rem rgba(0,0,0,.2);
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
         z-index: 1;
         transition: .25s ease;
         transition-delay: .25s;
@@ -822,7 +941,7 @@ section:nth-child(odd) .animate.scroll,
         width: 100%;
         height: 100%;
         background: var(--bg-color);
-        border-top: .1rem solid rgba(0,0,0,.2);
+        border-top: .1rem solid rgba(0, 0, 0, .2);
         z-index: -1;
         transition: .25s ease;
         transition-delay: 0s;
@@ -849,8 +968,37 @@ section:nth-child(odd) .animate.scroll,
 
     .home-imgHover {
         pointer-events: none;
-        background:  var(--bg-color);
-        opacity: .6;    
+        background: var(--bg-color);
+        opacity: .6;
+    }
+}
+
+/* Make sure your media queries for smaller screens still work with these new sizes */
+@media (max-width: 768px) {
+    .projects-row {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        /* Adjust min width for smaller screens */
+        gap: 2.5rem;
+        /* Reduce gap on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .projects .heading {
+        font-size: 3.8rem;
+        margin-bottom: 3.5rem;
+    }
+
+    .project-box {
+        padding: 2rem;
+    }
+
+    .project-box h3 {
+        font-size: 2.2rem;
+    }
+
+    .project-box p {
+        font-size: 1.4rem;
     }
 }
 
@@ -916,6 +1064,7 @@ section:nth-child(odd) .animate.scroll,
 
 /* KEYFRAMES ANIMATION */
 @keyframes homeBgText {
+
     0%,
     10%,
     100% {
@@ -929,6 +1078,7 @@ section:nth-child(odd) .animate.scroll,
 }
 
 @keyframes homeCursorText {
+
     0%,
     10%,
     100% {
