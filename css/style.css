@@ -87,7 +87,7 @@ section {
     display: flex;
     align-items: center;
     padding: 0 9%;
-    background: url('/images/home.jpg') no-repeat;
+    background: /*url('/images/home.jpg') no-repeat*/ var(--bg-color);
     background-size: cover;
     background-position: center;
 }
@@ -269,10 +269,10 @@ section {
     transition: 3s;
 }
 
-.home-imgHover:hover {
+/*.home-imgHover:hover {
     background: var(--bg-color);
     opacity: .8;
-}
+}*/
 
 .about {
     display: flex;
