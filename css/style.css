@@ -154,7 +154,7 @@ section {
     position: relative;
     display: flex;
     justify-content: space-between;
-    width: 34.5rem;
+    width: 34rem;
     height: 5rem;
 }
 
@@ -213,7 +213,7 @@ section {
 .home-sci {
     position: absolute;
     bottom: 4rem;
-    width: 110px;
+    width: 170px;
     display: flex;
     justify-content: space-between;
 }
@@ -627,10 +627,146 @@ span {
     color: var(--bg-color);
 }
 
-/* Rest of your CSS (e.g., global .animate, keyframes, media queries) */
-/* (omitted for brevity, but keep them in your actual stylesheet) */
-
 .skills {
+    min-height: auto;
+    padding-bottom: 7rem;
+    background: var(--bg-color); /* Assuming your background color */
+}
+
+.skills h2 {
+    text-align: center; /* Center the main heading */
+    font-size: 4.5rem; /* Make heading consistent with other sections */
+    margin-bottom: 5rem; /* Space below heading */
+    position: relative;
+    /* Removed inline-block, left, transform as text-align: center is usually sufficient for headings */
+}
+
+.skills .skills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3.5rem; /* Adjusted gap for consistency with other sections like education/projects */
+    justify-content: center; /* Center columns in the row */
+    width: 90%; /* Give it more width like other sections */
+    max-width: 1200px; /* Keep max width */
+    margin: 0 auto; /* Center the row */
+    padding: 0 1rem; /* Add horizontal padding */
+}
+
+.skills-row .skills-column {
+    flex: 1 1 40rem; /* Allows columns to grow/shrink, with a base of 40rem */
+    min-width: 300px; /* Ensure columns don't get too small on smaller screens */
+    margin-bottom: 3rem; /* Add some space between rows if there are multiple rows */
+}
+
+.skills-column .title {
+    position: relative;
+    display: inline-block; /* Keep inline-block if you have ::before/::after underline effects */
+    font-size: 3.2rem; /* Make title more prominent, consistent with education */
+    margin: 0 0 2.5rem; /* Adjusted spacing */
+    color: var(--text-color);
+}
+
+.skills-column .skills-box {
+    position: relative;
+}
+
+.skills-box .skills-content {
+    position: relative;
+    border: .2rem solid var(--main-color);
+    border-radius: .8rem; /* Slightly more rounded corners */
+    padding: 1rem 2rem; /* Increased padding for better spacing */
+    z-index: 1;
+    overflow: hidden;
+    background: var(--second-bg-color); /* Ensure initial background matches the hover cover */
+    transition: box-shadow .3s ease; /* Smooth shadow transition */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); /* Add subtle initial shadow */
+}
+
+.skills-box .skills-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: var(--bg-color); /* This color will slide over on hover */
+    z-index: -1;
+    transition: .5s ease; /* Added ease for smoother effect */
+}
+
+.skills-box .skills-content:hover::before {
+    width: 100%;
+}
+
+.skills-content .progress {
+    padding: 1rem 0;
+}
+
+.skills-content .progress h3 {
+    font-size: 1.8rem; /* Slightly larger skill names */
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-color); /* Ensure default text color */
+    margin-bottom: .5rem; /* Space between text and bar */
+}
+
+.skills-content .progress h3 span {
+    color: var(--text-color); /* Keep percentage text color consistent initially */
+    font-size: 1.6rem; /* Adjust percentage font size */
+}
+
+.skills-content .progress .bar {
+    height: 2rem; /* Slightly smaller bar height for a sleeker look */
+    border-radius: .6rem;
+    border: .2rem solid var(--main-color);
+    padding: .3rem; /* Adjusted padding */
+    margin: 0.5rem 0 1.5rem; /* Adjusted margin to control spacing between bars */
+    overflow: hidden; /* Important for animation of inner span */
+}
+
+.skills-content .progress .bar span {
+    display: block;
+    height: 100%;
+    border-radius: .3rem;
+    background: var(--main-color);
+    width: 0; /* Initial width for animation */
+    transition: width 1s ease-in-out; /* Animation for the bar filling up */
+}
+
+/* ----------------------------------------------------------- */
+/* NEW: CSS to animate the bars based on the HTML --width variable */
+/* This requires a parent class to trigger the animation, e.g., 'show-animate' on the skills section */
+
+.skills.show-animate .skills-content .progress .bar span {
+    width: var(--width); /* Sets the width from the inline style in HTML */
+}
+
+/* ----------------------------------------------------------- */
+
+/* Animation delays for skill titles and boxes (if you have them) */
+.skills.show-animate .skills-column .title.animate.scroll {
+    width: 0; /* Or whatever animation you have for titles */
+    transition: width .5s ease;
+}
+
+.skills.show-animate .skills-box .skills-content.animate.scroll {
+    width: 0; /* Or whatever animation you have for skill boxes */
+    transition: width .5s ease;
+}
+
+/* Cleanup: Remove old specific nth-child width rules as they are replaced by var(--width) */
+/*
+.skills-column:nth-child(1) .skills-content .progress:nth-child(1) .bar span { width: 90%; }
+.skills-column:nth-child(1) .skills-content .progress:nth-child(2) .bar span { width: 80%; }
+.skills-column:nth-child(1) .skills-content .progress:nth-child(3) .bar span { width: 90%; }
+.skills-column:nth-child(1) .skills-content .progress:nth-child(4) .bar span { width: 90%; }
+.skills-column:nth-child(2) .skills-content .progress:nth-child(1) .bar span { width: 90%; }
+.skills-column:nth-child(2) .skills-content .progress:nth-child(2) .bar span { width: 80%; }
+.skills-column:nth-child(2) .skills-content .progress:nth-child(3) .bar span { width: 90%; }
+.skills-column:nth-child(2) .skills-content .progress:nth-child(4) .bar span { width: 90%; }
+*/
+
+/* .skills {
     min-height: auto;
     padding-bottom: 7rem;
 }
@@ -746,7 +882,7 @@ span {
 
 .skills-column:nth-child(2) .skills-content .progress:nth-child(4) .bar span {
     width: 90%;
-}
+} */
 
 .contact {
     min-height: auto;
