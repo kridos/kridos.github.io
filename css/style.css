@@ -444,8 +444,68 @@ span {
     margin-top: .5rem;
 }
 
+/* --- Styles for Relevant Coursework List (Scrolling) --- */
+.education-content .content p:has(+ .coursework-list) {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    padding-top: 1rem;
+}
 
+.education-content .content p:has(+ .coursework-list) strong {
+    color: var(--main-color);
+}
 
+.education-content .content .coursework-list {
+    list-style: disc;
+    padding-left: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+
+    /* ***** NEW: Scrolling behavior ***** */
+    max-height: 15rem; /* Adjust this value as needed to control the list's height */
+    overflow-y: auto; /* Adds a vertical scrollbar if content exceeds max-height */
+
+    mask-image: linear-gradient(to bottom, 
+                black 0%, black calc(100% - 30px), /* Visible content for most of the height */
+                transparent 100% /* Fade out the last 30px */
+              );
+    
+    /* Style the scrollbar (for better aesthetics) */
+    /* For Webkit browsers (Chrome, Safari, Edge) */
+    &::-webkit-scrollbar {
+        width: 0.6rem; /* Width of the scrollbar */
+    }
+    &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05); /* Track background */
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: var(--main-color); /* Thumb color */
+        border-radius: 10px;
+    }
+
+    /* For Firefox */
+    scrollbar-width: thin; /* "auto" or "none" */
+    scrollbar-color: var(--main-color) rgba(255, 255, 255, 0.05); /* thumb color track color */
+}
+
+.education-content .content .coursework-list li {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+/* Ensure the ul within the experience section still looks good */
+.education .education-column ul {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    margin-top: .5rem;
+    list-style: disc;
+    padding-left: 1.5rem;
+    color: var(--text-color);
+}
 
 
 /* Projects Section */
