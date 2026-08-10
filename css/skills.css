@@ -52,3 +52,17 @@
   justify-content: center;
   margin: var(--space-7) 0 var(--space-5);
 }
+
+/* Plain CSS transition for the toggle-revealed "more" categories — same
+   reasoning as the expanded project cards: guaranteed to play regardless
+   of scroll position when the toggle is clicked. */
+#skills-categories-more .skill-category {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 420ms ease, transform 420ms ease;
+}
+
+#skills-categories-more .skill-category.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}

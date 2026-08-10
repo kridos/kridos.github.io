@@ -4,6 +4,16 @@ import { canUseComplexMotion, prefersReducedMotion } from './motion-utils.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Late-loading webfonts (or the hero canvas settling into its final size)
+// can reflow the page after ScrollTrigger's initial position calculations,
+// leaving some trigger zones stale — a card that should be well within
+// the "already scrolled past, should be visible" range can end up stuck
+// at its initial opacity:0 if its trigger's start/end were computed
+// against a shorter/taller page than the final layout. One refresh after
+// everything (including fonts and images) has actually finished loading
+// recalculates every trigger against the real, settled layout.
+window.addEventListener('load', () => ScrollTrigger.refresh());
+
 export function initScrollReveals(selector = '.gsap-reveal') {
   const elements = document.querySelectorAll(selector);
   if (elements.length === 0) return;

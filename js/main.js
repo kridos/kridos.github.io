@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroScene(document.getElementById('hero-canvas'));
   initProjects();
   initSkills();
-  initTextScramble('.project-category-pill, .skill-category h3');
+  initTextScramble('.project-category-pill, .project-box h3, .skill-category h3');
   initCursorGlow();
 
   // scroll-animations.js does a top-level CDN import of GSAP/ScrollTrigger.

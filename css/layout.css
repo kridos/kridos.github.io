@@ -100,6 +100,16 @@ body {
   animation-delay: calc(0.12s * var(--i));
 }
 
+/* The role-line typing effect (.text-animate) had its own separate,
+   hardcoded 2s animation-delay in css/style.css — independent of the
+   cover-reveal cascade above — which left "Robotics & AI/ML Enthusiast"
+   sitting blank for a full 2 seconds after the rest of the hero had
+   already appeared. Cut that down; the effect itself is untouched. */
+.home.show-animate .home-content .text-animate h3,
+.home.show-animate .home-content .text-animate h3::before {
+  animation-delay: 0.5s;
+}
+
 /* css/style.css sets a global `outline: none`; restore visible keyboard focus
    for nav links, buttons, filter pills, and project cards. */
 :focus-visible {

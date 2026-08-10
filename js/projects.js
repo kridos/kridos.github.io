@@ -1,5 +1,6 @@
 import { projects, CATEGORIES } from './data/projects.js';
 import { canUseComplexMotion } from './motion-utils.js';
+import { initTextScramble } from './effects.js';
 
 const CATEGORY_LABELS = new Map(CATEGORIES.map((c) => [c.key, c.label]));
 
@@ -54,7 +55,7 @@ function createProjectCard(project) {
   card.innerHTML = `
     <div class="project-spotlight" aria-hidden="true"></div>
     <div class="project-content">
-      <span class="project-category-pill">${primaryLabel}</span>
+      <div class="project-category-wrap"><span class="project-category-pill">${primaryLabel}</span></div>
       <h3>${project.title}</h3>
       <p>${project.description}</p>
     </div>
@@ -110,10 +111,15 @@ export function initProjects() {
   });
 
   const nonFeatured = projects.filter((p) => !p.featured);
+  // These cards live behind the "View All Projects" toggle, not a scroll
+  // discovery — their reveal is a plain CSS class transition (see
+  // .project-box.is-revealed in css/projects.css) triggered directly by
+  // the click handler below, not gated by ScrollTrigger. A scroll-trigger
+  // whose start/end were computed while this grid was `hidden` (zero size)
+  // could otherwise leave cards permanently stuck at opacity:0 even once
+  // visible and clickable.
   nonFeatured.forEach((p) => {
-    const card = createProjectCard(p);
-    card.classList.add('gsap-reveal');
-    expandedContainer.appendChild(card);
+    expandedContainer.appendChild(createProjectCard(p));
   });
 
   if (canUseComplexMotion()) {
@@ -158,9 +164,25 @@ export function initProjects() {
 
   viewAllBtn.addEventListener('click', () => {
     const isExpanded = viewAllBtn.getAttribute('aria-expanded') === 'true';
-    viewAllBtn.setAttribute('aria-expanded', String(!isExpanded));
+    const willExpand = !isExpanded;
+    viewAllBtn.setAttribute('aria-expanded', String(willExpand));
     expandedSection.hidden = isExpanded;
     viewAllBtn.textContent = isExpanded ? 'View All Projects' : 'Show Fewer Projects';
+
+    if (willExpand) {
+      const cards = expandedContainer.querySelectorAll('.project-box');
+      cards.forEach((card) => card.classList.remove('is-revealed'));
+      // Double rAF: let the browser paint the opacity:0 starting state
+      // (now that `hidden` is gone) before switching the class, so the
+      // CSS transition actually plays instead of snapping instantly.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          cards.forEach((card) => card.classList.add('is-revealed'));
+        });
+      });
+      initTextScramble('#expanded-projects-grid .project-category-pill, #expanded-projects-grid .project-box h3');
+    }
+
     refreshScrollTrigger();
   });
 }
