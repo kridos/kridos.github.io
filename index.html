@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/projects.css">
     <link rel="stylesheet" href="css/skills.css">
     <link rel="stylesheet" href="css/timeline.css">
+    <link rel="stylesheet" href="css/layout.css">
 
     <!-- box icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -88,13 +89,13 @@
     <section class="about" id="about">
         <h2 class="heading">About <span>Me</span><span class="animate scroll" style="--i:1;"></span></h2>
 
-        <div class="about-img">
+        <div class="about-img gsap-reveal">
             <img src="images/about.jpg" alt="">
             <span class="circle-spin"></span>
             <span class="animate scroll" style="--i:2;"></span>
         </div>
 
-        <div class="about-content">
+        <div class="about-content gsap-reveal">
             <h3>Robotics & AI/ML Enthusiast<span class="animate scroll" style="--i:3;"></span></h3>
             <p>
                 I'm a Computer Science and Statistics (Data Science) student at the University of
@@ -265,7 +266,7 @@
 
             <input type="hidden" name="access_key" value="64730e17-42ea-48df-a3c3-60464b4a1a43">
 
-            <div class="input-box">
+            <div class="input-box gsap-reveal">
                 <div class="input-field">
                     <input type="text" name="name" placeholder="Full Name" required>
                     <span class="focus"></span>
@@ -279,7 +280,7 @@
                 <span class="animate scroll" style="--i:3;"></span>
             </div>
 
-            <div class="input-box">
+            <div class="input-box gsap-reveal">
                 <div class="input-field">
                     <input type="number" name="phone" placeholder="Mobile Number" required>
                     <span class="focus"></span>
@@ -293,7 +294,7 @@
                 <span class="animate scroll" style="--i:5;"></span>
             </div>
 
-            <div class="textarea-field">
+            <div class="textarea-field gsap-reveal">
                 <textarea id="" cols="30" rows="10" name="message" placeholder="Your Message" required></textarea>
                 <span class="focus"></span>
 
@@ -324,6 +325,7 @@
     </footer>
 
     <script src="js/script.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 
 

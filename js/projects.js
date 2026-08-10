@@ -3,7 +3,7 @@ import { canUseComplexMotion } from './motion-utils.js';
 
 function createProjectCard(project) {
   const card = document.createElement('div');
-  card.className = 'project-box gsap-reveal';
+  card.className = 'project-box';
   card.dataset.category = project.category;
   card.innerHTML = `
     <div class="project-content">
@@ -51,7 +51,9 @@ export function initProjects() {
 
   const nonFeatured = projects.filter((p) => !p.featured);
   nonFeatured.forEach((p) => {
-    expandedContainer.appendChild(createProjectCard(p));
+    const card = createProjectCard(p);
+    card.classList.add('gsap-reveal');
+    expandedContainer.appendChild(card);
   });
 
   const allPill = document.createElement('button');
