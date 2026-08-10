@@ -1,0 +1,6 @@
+{
+  "name": "kridos-portfolio",
+  "private": true,
+  "type": "module",
+  "description": "Dev-time only manifest so data/logic modules can be self-checked with plain node. Not used by the deployed static site."
+}
