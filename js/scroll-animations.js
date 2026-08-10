@@ -35,28 +35,22 @@ export function initEducationTimeline(sectionSelector = '#education') {
   const milestones = section.querySelectorAll('.timeline-milestone');
   if (milestones.length === 0) return;
 
-  if (!canUseComplexMotion() || section.offsetHeight > window.innerHeight) {
+  if (!canUseComplexMotion()) {
     milestones.forEach((m) => m.classList.add('is-visible'));
     return;
   }
 
-  gsap.set(milestones, { opacity: 0, y: 32 });
-
-  const timeline = gsap.timeline({
+  gsap.from(milestones, {
+    opacity: 0,
+    y: 32,
+    duration: 0.5,
+    stagger: 0.15,
+    ease: 'power2.out',
     scrollTrigger: {
       trigger: section,
-      start: 'top top',
-      end: () => `+=${milestones.length * 400}`,
-      scrub: 0.6,
-      pin: true,
+      start: 'top 80%',
+      toggleActions: 'play none none reverse',
     },
-  });
-
-  milestones.forEach((milestone, index) => {
-    timeline.to(milestone, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, index);
-    if (index < milestones.length - 1) {
-      timeline.to(milestone, { opacity: 0.25, duration: 0.3, ease: 'power1.out' }, index + 0.7);
-    }
   });
 }
 
@@ -81,12 +75,8 @@ export function initProjectsPinnedReveal(sectionSelector = '#featured-projects')
     ease: 'back.out(1.4)',
     scrollTrigger: {
       trigger: section,
-      start: 'top 75%',
-      end: '+=300',
-      pin: true,
-      pinSpacing: true,
-      scrub: false,
-      toggleActions: 'play none none none',
+      start: 'top 85%',
+      toggleActions: 'play none none reverse',
     },
   });
 }
