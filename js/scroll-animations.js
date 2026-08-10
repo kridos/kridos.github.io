@@ -13,18 +13,58 @@ export function initScrollReveals(selector = '.gsap-reveal') {
     return;
   }
 
-  elements.forEach((el) => {
-    gsap.from(el, {
-      opacity: 0,
-      y: 24,
-      duration: 0.5,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 88%',
-        toggleActions: 'play none none reverse',
-      },
-    });
+  gsap.set(elements, { opacity: 0, y: 24, scale: 0.96 });
+
+  ScrollTrigger.batch(selector, {
+    start: 'top 88%',
+    onEnter: (batch) =>
+      gsap.to(batch, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power3.out',
+        overwrite: true,
+      }),
+    onLeaveBack: (batch) =>
+      gsap.to(batch, {
+        opacity: 0,
+        y: 24,
+        scale: 0.96,
+        duration: 0.3,
+        overwrite: true,
+      }),
+  });
+}
+
+/**
+ * Wipes each section heading in as its own left-to-right clip-path reveal,
+ * scrubbed directly to scroll position (not a one-shot trigger) so the
+ * reveal visibly tracks the scrollbar rather than firing all at once.
+ */
+export function initHeadingReveals(selector = '.heading') {
+  const headings = document.querySelectorAll(selector);
+  if (headings.length === 0) return;
+
+  if (prefersReducedMotion()) return;
+
+  headings.forEach((heading) => {
+    gsap.fromTo(
+      heading,
+      { clipPath: 'inset(0 100% 0 0)', opacity: 0.3 },
+      {
+        clipPath: 'inset(0 0% 0 0)',
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heading,
+          start: 'top 92%',
+          end: 'top 55%',
+          scrub: 0.4,
+        },
+      }
+    );
   });
 }
 

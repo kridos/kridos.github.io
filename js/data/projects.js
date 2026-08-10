@@ -17,7 +17,7 @@ export const projects = [
     tags: ['React', 'TypeScript', 'Canvas API', 'IndexedDB'],
     category: 'webmobile',
     url: 'https://github.com/kridos/Assignment-Optimizer',
-    featured: true,
+    featured: false,
   },
   {
     slug: 'ai-tab-manager',
@@ -109,7 +109,7 @@ export const projects = [
     tags: ['Kotlin', 'Jetpack Compose', 'Android'],
     category: 'webmobile',
     url: 'https://github.com/kridos/calculator',
-    featured: false,
+    featured: true,
   },
   {
     slug: 'stat424-project',

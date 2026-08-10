@@ -83,6 +83,8 @@ body {
 .home-sci {
   position: static;
   width: auto;
+  display: flex;
+  gap: 1.8rem;
   margin-top: 2.5rem;
 }
 

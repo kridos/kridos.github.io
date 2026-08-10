@@ -23,7 +23,9 @@ function createProjectCard(project) {
       <h3>${project.title}</h3>
       <p>${project.description}</p>
       <div class="project-tags">
-        ${project.tags.map((tag) => `<span class="project-tag">${tag}</span>`).join('')}
+        <div class="project-tag-list">
+          ${project.tags.map((tag) => `<span class="project-tag">${tag}</span>`).join('')}
+        </div>
       </div>
     </div>
   `;

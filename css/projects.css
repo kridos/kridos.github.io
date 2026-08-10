@@ -28,19 +28,27 @@
 }
 
 .project-tags {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: 0;
+  transition: grid-template-rows 360ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 260ms ease,
+    margin-top 360ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-tags > .project-tag-list {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-1);
-  margin-top: var(--space-3);
-  max-height: 0;
+  min-height: 0;
   overflow: hidden;
-  opacity: 0;
-  transition: max-height var(--transition-standard), opacity var(--transition-standard);
 }
 
 .project-box.is-held .project-tags {
-  max-height: 200px;
+  grid-template-rows: 1fr;
   opacity: 1;
+  margin-top: var(--space-3);
 }
 
 .project-tag {
@@ -56,7 +64,7 @@
 .projects-more-controls {
   display: flex;
   justify-content: center;
-  margin: var(--space-5) 0;
+  margin: var(--space-7) 0 var(--space-5);
 }
 
 .expanded-projects {
