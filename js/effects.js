@@ -76,6 +76,32 @@ export function initTextScramble(selector) {
 }
 
 /**
+ * Tracks which Journey timeline entry is "current" as the user scrolls —
+ * whichever .timeline-milestone-wrap is crossing the vertical center of
+ * the viewport gets .is-active, which is what css/ambient.css scopes the
+ * dot's pulse ring to (so only the selected entry pulses, not all five at
+ * once). Native IntersectionObserver, no GSAP needed for this.
+ */
+export function initTimelineActiveTracking(sectionSelector = '#education') {
+  const section = document.querySelector(sectionSelector);
+  if (!section) return;
+
+  const wraps = section.querySelectorAll('.timeline-milestone-wrap');
+  if (wraps.length === 0) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle('is-active', entry.isIntersecting);
+      });
+    },
+    { rootMargin: '-35% 0px -35% 0px', threshold: 0 }
+  );
+
+  wraps.forEach((wrap) => observer.observe(wrap));
+}
+
+/**
  * A soft ambient glow that trails the cursor across dark sections outside
  * the hero, using GSAP quickTo for smooth lag instead of an instant snap.
  */

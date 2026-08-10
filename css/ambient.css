@@ -4,114 +4,127 @@
    Each section gets its own distinct technique so they don't read as
    copies of each other. */
 
-/* Journey: each timeline dot emits a continuous radar-style pulse ring,
-   like a live marker on the map of your career. */
-.timeline-dot {
-  position: relative;
-}
-
+/* Journey: the CURRENTLY ACTIVE timeline dot (tracked via IntersectionObserver
+   in js/effects.js, toggling .is-active as it crosses the viewport center)
+   pulses with a radar-style ring; inactive dots stay quiet. Deliberately
+   does NOT set `position` on .timeline-dot itself — that's already
+   `position: absolute` in css/timeline.css, which is what actually anchors
+   it to the line; redeclaring it here previously fought that rule. */
 .timeline-dot::after {
   content: '';
   position: absolute;
   inset: -6px;
   border-radius: 50%;
-  border: 2px solid var(--color-accent);
-  animation: timelinePulse 2.4s ease-out infinite;
+  border: 2px solid var(--color-accent-alt);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.timeline-milestone-wrap.is-active .timeline-dot::after {
+  animation: timelinePulse 1.8s ease-out infinite;
 }
 
 @keyframes timelinePulse {
   0% {
     transform: scale(0.6);
-    opacity: 0.7;
+    opacity: 0.8;
   }
   100% {
-    transform: scale(2.4);
+    transform: scale(2.2);
     opacity: 0;
   }
 }
 
-/* Projects: a slowly rotating gradient ring traces each card's border
-   continuously, like the card is quietly "powered on". Stays fully inside
-   the card's own edge (mask technique) so it's never clipped. */
+/* Projects: a slowly rotating gradient traces each card's edge.
+   Technique: two background layers on one pseudo-element, separated by a
+   transparent border — the solid fill is clipped to padding-box (inside
+   the border), the animated conic-gradient is clipped to border-box
+   (the full box), so the gradient only ever shows through the thin
+   border ring, never the center. The angle rotates via a registered
+   custom property (@property) so the browser can smoothly interpolate
+   it — a plain `transform: rotate()` was tried first, but rotating the
+   whole rectangular gradient layer swings its corners far outside the
+   card on every turn instead of keeping a fixed ring in place. */
+@property --border-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
 .project-box::before {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: -1;
   border-radius: inherit;
-  padding: 2px;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    var(--color-accent) 12%,
-    transparent 28%,
-    transparent 72%,
-    var(--color-accent-alt) 88%,
-    transparent 100%
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.7;
-  pointer-events: none;
-  animation: rotateBorder 6s linear infinite;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+    conic-gradient(
+      from var(--border-angle),
+      var(--color-accent),
+      var(--color-accent-alt) 50%,
+      var(--color-accent) 100%
+    ) border-box;
+  animation: rotateBorderAngle 5s linear infinite;
 }
 
-@keyframes rotateBorder {
+@keyframes rotateBorderAngle {
   to {
-    transform: rotate(360deg);
+    --border-angle: 360deg;
   }
 }
 
-/* Skills: a small "status light" pulses beside each category title, like
-   each skill area is actively online. */
+/* Skills: a thin gradient light continuously flows along the underline of
+   each category title — distinct from both the pulse (Journey) and the
+   rotating border (Projects). */
 .skill-category h3 {
   position: relative;
-  padding-left: 1.8rem;
+  padding-bottom: 0.7rem;
 }
 
-.skill-category h3::before {
+.skill-category h3::after {
   content: '';
   position: absolute;
   left: 0;
-  top: 50%;
-  width: 8px;
-  height: 8px;
-  margin-top: -4px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  animation: statusPulse 2.4s ease-out infinite;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-accent), var(--color-accent-alt), transparent);
+  background-size: 200% 100%;
+  animation: flowUnderline 3.5s linear infinite;
 }
 
-@keyframes statusPulse {
+@keyframes flowUnderline {
   0% {
-    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.55);
-  }
-  70% {
-    box-shadow: 0 0 0 9px rgba(34, 211, 238, 0);
+    background-position: 200% 0;
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
+    background-position: -200% 0;
   }
 }
 
-/* Contact: the Submit button breathes with an inviting pulse ring,
-   drawing the eye toward the one action this section wants you to take. */
-.contact form .btn-box.btns .btn {
+/* Contact: the Submit button breathes with an inviting pulse ring. The
+   ring lives on the .btn-box.btns wrapper, not the button itself — the
+   button has its own overflow: hidden (css/style.css, for its hover-fill
+   sweep effect) which would otherwise clip the ring the moment it grows
+   past the button's edge. */
+.contact form .btn-box.btns {
   position: relative;
 }
 
-.contact form .btn-box.btns .btn::after {
+.contact form .btn-box.btns::after {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: inherit;
+  border-radius: 999px;
   pointer-events: none;
   animation: submitPulse 2.6s ease-out infinite;
 }
 
 @keyframes submitPulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.45);
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.5);
   }
   70% {
     box-shadow: 0 0 0 14px rgba(34, 211, 238, 0);
@@ -122,13 +135,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .timeline-dot::after,
+  .timeline-milestone-wrap.is-active .timeline-dot::after,
   .project-box::before,
-  .skill-category h3::before,
-  .contact form .btn-box.btns .btn::after {
+  .skill-category h3::after,
+  .contact form .btn-box.btns::after {
     animation: none;
   }
 
+  /* .project-box::before is NOT hidden here (unlike the other three) —
+     it's also the card's actual border/fill, not purely decorative;
+     disabling its animation above already leaves it as a static ring. */
   .timeline-dot::after {
     display: none;
   }

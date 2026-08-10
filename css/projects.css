@@ -4,22 +4,24 @@
 }
 
 .project-box {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  /* No border/background declared here — both live on the ::before
+     rotating-border layer in css/ambient.css (a dual-background-layer
+     trick: solid fill clipped to padding-box, animated gradient clipped
+     to border-box, separated by a transparent border). */
   border-radius: var(--radius);
   padding: var(--space-4);
   position: relative;
-  overflow: hidden;
+  z-index: 0;
+  overflow: visible;
   transform-style: preserve-3d;
   will-change: transform;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-  transition: border-color var(--transition-fast);
   cursor: pointer;
 }
 
-.project-box:hover,
-.project-box:focus-within {
-  border-color: var(--color-accent);
+.project-box:hover::before,
+.project-box:focus-within::before {
+  animation-duration: 2.2s;
 }
 
 .project-spotlight {

@@ -1,7 +1,7 @@
 import { initHeroScene } from './hero-scene.js';
 import { initProjects } from './projects.js';
 import { initSkills } from './skills.js';
-import { initTextScramble, initCursorGlow } from './effects.js';
+import { initTextScramble, initCursorGlow, initTimelineActiveTracking } from './effects.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeroScene(document.getElementById('hero-canvas'));
@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSkills();
   initTextScramble('.project-category-pill, .project-box h3, .skill-category h3');
   initCursorGlow();
+  initTimelineActiveTracking();
 
   // scroll-animations.js does a top-level CDN import of GSAP/ScrollTrigger.
   // Load it dynamically so a failed CDN fetch only degrades scroll-motion
