@@ -1,16 +1,60 @@
 .timeline {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: start;
-  gap: var(--space-5);
-  max-width: 1100px;
-  margin: var(--space-6) auto 0;
+  position: relative;
+  max-width: 900px;
+  margin: var(--space-7) auto 0;
 }
 
-.timeline-column {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-5);
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-border);
+  transform: translateX(-50%);
+}
+
+.timeline-line-fill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  background: linear-gradient(var(--color-accent), var(--color-accent-alt));
+  transform-origin: top;
+  transform: scaleY(0);
+}
+
+.timeline-milestone-wrap {
+  position: relative;
+  width: 50%;
+  padding: 0 var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.timeline-milestone-wrap:nth-child(odd) {
+  left: 0;
+}
+
+.timeline-milestone-wrap:nth-child(even) {
+  left: 50%;
+}
+
+.timeline-dot {
+  position: absolute;
+  top: var(--space-4);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.2);
+  z-index: 1;
+}
+
+.timeline-milestone-wrap:nth-child(odd) .timeline-dot {
+  right: -7px;
+}
+
+.timeline-milestone-wrap:nth-child(even) .timeline-dot {
+  left: -7px;
 }
 
 .timeline-milestone {
@@ -18,8 +62,21 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: var(--space-5);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
   max-height: 480px;
   overflow-y: auto;
+}
+
+.timeline-type {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.12);
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  margin-bottom: var(--space-3);
 }
 
 .timeline-milestone .year {
@@ -56,14 +113,32 @@
 }
 
 @media (max-width: 850px) {
-  .timeline {
-    grid-template-columns: 1fr;
+  .timeline-line {
+    left: 20px;
+  }
+
+  .timeline-milestone-wrap,
+  .timeline-milestone-wrap:nth-child(even) {
+    width: 100%;
+    left: 0;
+    padding-left: 50px;
+    padding-right: 0;
+  }
+
+  .timeline-milestone-wrap:nth-child(odd) .timeline-dot,
+  .timeline-milestone-wrap:nth-child(even) .timeline-dot {
+    left: 13px;
+    right: auto;
   }
 }
 
 @media (prefers-reduced-motion: reduce), (hover: none) {
-  .timeline-milestone {
+  .timeline-milestone-wrap {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .timeline-line-fill {
+    transform: scaleY(1) !important;
   }
 }

@@ -68,30 +68,51 @@ export function initHeadingReveals(selector = '.heading') {
   });
 }
 
+/**
+ * Alternating-side timeline entries slide in from their own edge as they
+ * reach the viewport, while a gradient line down the center draws itself
+ * in sync with scroll progress through the whole section (scrubbed, not
+ * one-shot) — the line's fill visibly tracks the scrollbar.
+ */
 export function initEducationTimeline(sectionSelector = '#education') {
   const section = document.querySelector(sectionSelector);
   if (!section) return;
 
-  const milestones = section.querySelectorAll('.timeline-milestone');
-  if (milestones.length === 0) return;
+  const wraps = section.querySelectorAll('.timeline-milestone-wrap');
+  const lineFill = section.querySelector('.timeline-line-fill');
+  if (wraps.length === 0) return;
 
   if (!canUseComplexMotion()) {
-    milestones.forEach((m) => m.classList.add('is-visible'));
+    wraps.forEach((w) => w.classList.add('is-visible'));
     return;
   }
 
-  gsap.from(milestones, {
-    opacity: 0,
-    y: 32,
-    duration: 0.5,
-    stagger: 0.15,
-    ease: 'power2.out',
-    scrollTrigger: {
-      trigger: section,
-      start: 'top 80%',
-      toggleActions: 'play none none reverse',
-    },
+  wraps.forEach((wrap, index) => {
+    gsap.from(wrap, {
+      opacity: 0,
+      x: index % 2 === 0 ? -60 : 60,
+      duration: 0.6,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: wrap,
+        start: 'top 85%',
+        toggleActions: 'play none none reverse',
+      },
+    });
   });
+
+  if (lineFill) {
+    gsap.to(lineFill, {
+      scaleY: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 70%',
+        end: 'bottom 70%',
+        scrub: 0.6,
+      },
+    });
+  }
 }
 
 export function initProjectsPinnedReveal(sectionSelector = '#featured-projects') {

@@ -1,6 +1,8 @@
 import { projects, CATEGORIES } from './data/projects.js';
 import { canUseComplexMotion } from './motion-utils.js';
 
+const CATEGORY_LABELS = new Map(CATEGORIES.map((c) => [c.key, c.label]));
+
 async function refreshScrollTrigger() {
   if (!canUseComplexMotion()) return;
   try {
@@ -11,21 +13,54 @@ async function refreshScrollTrigger() {
   }
 }
 
+/** Subtle cursor-tracking 3D tilt + spotlight glow, GSAP-driven so it never
+ * fights the CSS hover transition (which only touches border-color). */
+function attachTiltEffect(card, gsap) {
+  const spotlight = card.querySelector('.project-spotlight');
+  const rotateX = gsap.quickTo(card, 'rotateX', { duration: 0.5, ease: 'power3.out' });
+  const rotateY = gsap.quickTo(card, 'rotateY', { duration: 0.5, ease: 'power3.out' });
+  const lift = gsap.quickTo(card, 'y', { duration: 0.5, ease: 'power3.out' });
+
+  card.addEventListener('mousemove', (event) => {
+    const rect = card.getBoundingClientRect();
+    const px = (event.clientX - rect.left) / rect.width;
+    const py = (event.clientY - rect.top) / rect.height;
+    rotateY((px - 0.5) * 12);
+    rotateX((0.5 - py) * 12);
+    if (spotlight) {
+      spotlight.style.setProperty('--x', `${px * 100}%`);
+      spotlight.style.setProperty('--y', `${py * 100}%`);
+    }
+  });
+
+  card.addEventListener('mouseenter', () => lift(-4));
+  card.addEventListener('mouseleave', () => {
+    rotateX(0);
+    rotateY(0);
+    lift(0);
+  });
+}
+
 function createProjectCard(project) {
   const card = document.createElement('div');
   card.className = 'project-box';
-  card.dataset.category = project.category;
+  card.dataset.categories = project.categories.join(' ');
   card.tabIndex = 0;
   card.setAttribute('role', 'link');
   card.setAttribute('aria-label', `Open ${project.title} on GitHub`);
+
+  const primaryLabel = CATEGORY_LABELS.get(project.categories[0]) ?? 'Other';
+
   card.innerHTML = `
+    <div class="project-spotlight" aria-hidden="true"></div>
     <div class="project-content">
+      <span class="project-category-pill">${primaryLabel}</span>
       <h3>${project.title}</h3>
       <p>${project.description}</p>
-      <div class="project-tags">
-        <div class="project-tag-list">
-          ${project.tags.map((tag) => `<span class="project-tag">${tag}</span>`).join('')}
-        </div>
+    </div>
+    <div class="project-tags">
+      <div class="project-tag-list">
+        ${project.tags.map((tag) => `<span class="project-tag">${tag}</span>`).join('')}
       </div>
     </div>
   `;
@@ -67,6 +102,9 @@ export function initProjects() {
 
   if (!featuredContainer || !expandedContainer || !viewAllBtn || !expandedSection) return;
 
+  // Cards render immediately with no dependency on GSAP. The tilt/spotlight
+  // effect is attached afterward, once (if) GSAP loads, so a slow or failed
+  // CDN fetch only costs the enhancement, never the content.
   projects.filter((p) => p.featured).forEach((p) => {
     featuredContainer.appendChild(createProjectCard(p));
   });
@@ -78,6 +116,15 @@ export function initProjects() {
     expandedContainer.appendChild(card);
   });
 
+  if (canUseComplexMotion()) {
+    import('https://cdn.jsdelivr.net/npm/gsap@3.12.5/+esm')
+      .then(({ default: gsap }) => {
+        document.querySelectorAll('#featured-projects .project-box, #expanded-projects-grid .project-box')
+          .forEach((card) => attachTiltEffect(card, gsap));
+      })
+      .catch((err) => console.error('GSAP unavailable for project card tilt:', err));
+  }
+
   const allPill = document.createElement('button');
   allPill.className = 'category-filter-pill is-active';
   allPill.type = 'button';
@@ -86,7 +133,7 @@ export function initProjects() {
   filtersContainer.appendChild(allPill);
 
   CATEGORIES.forEach((cat) => {
-    if (!nonFeatured.some((p) => p.category === cat.key)) return;
+    if (!nonFeatured.some((p) => p.categories.includes(cat.key))) return;
     const pill = document.createElement('button');
     pill.className = 'category-filter-pill';
     pill.type = 'button';
@@ -104,7 +151,8 @@ export function initProjects() {
 
     const category = pill.dataset.category;
     expandedContainer.querySelectorAll('.project-box').forEach((card) => {
-      card.hidden = category !== 'all' && card.dataset.category !== category;
+      const cardCategories = card.dataset.categories.split(' ');
+      card.hidden = category !== 'all' && !cardCategories.includes(category);
     });
   });
 

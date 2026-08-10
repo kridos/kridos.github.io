@@ -56,9 +56,11 @@ body {
   display: none;
 }
 
-.project-box .project-content {
+.project-box .project-content,
+.project-box .project-content:hover {
   padding: 0;
   box-shadow: none;
+  transform: none;
 }
 
 /* Individual contact fields get their own accent-colored box (see
@@ -88,9 +90,40 @@ body {
   margin-top: 2.5rem;
 }
 
+/* The hero's cover-reveal cascade (kept — it's the effect you like) used a
+   0.3s-per-item delay multiplier inherited from the header's timing, which
+   stacked into a couple of seconds of wait across 6 hero elements before
+   the last one (the social icons) finished uncovering. Tighten pacing for
+   just the hero so the same effect resolves noticeably sooner. */
+.home .animate {
+  animation-duration: 0.4s;
+  animation-delay: calc(0.12s * var(--i));
+}
+
 /* css/style.css sets a global `outline: none`; restore visible keyboard focus
    for nav links, buttons, filter pills, and project cards. */
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 500px;
+  height: 500px;
+  margin-left: -250px;
+  margin-top: -250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.09), transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none) {
+  .cursor-glow {
+    display: none;
+  }
 }

@@ -18,7 +18,11 @@ assert.equal(featuredCount, 6, 'exactly 6 projects must be marked featured');
 
 const categoryKeys = new Set(CATEGORIES.map((c) => c.key));
 for (const p of projects) {
-  assert.ok(categoryKeys.has(p.category), `project ${p.slug} has unknown category ${p.category}`);
+  assert.ok(Array.isArray(p.categories) && p.categories.length > 0, `project ${p.slug} must have at least one category`);
+  for (const cat of p.categories) {
+    assert.ok(categoryKeys.has(cat), `project ${p.slug} has unknown category ${cat}`);
+  }
+  assert.equal(new Set(p.categories).size, p.categories.length, `project ${p.slug} has duplicate categories`);
   assert.ok(p.url.startsWith('https://github.com/kridos/'), `project ${p.slug} url must be a kridos github repo`);
   assert.ok(p.tags.length > 0, `project ${p.slug} must have at least one tag`);
   assert.ok(p.description.length > 20, `project ${p.slug} description looks too short`);
