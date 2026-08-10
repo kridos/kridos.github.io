@@ -1,6 +1,16 @@
 import { projects, CATEGORIES } from './data/projects.js';
 import { canUseComplexMotion } from './motion-utils.js';
 
+async function refreshScrollTrigger() {
+  if (!canUseComplexMotion()) return;
+  try {
+    const { default: ScrollTrigger } = await import('https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js');
+    ScrollTrigger.refresh();
+  } catch (err) {
+    console.error('ScrollTrigger refresh unavailable:', err);
+  }
+}
+
 function createProjectCard(project) {
   const card = document.createElement('div');
   card.className = 'project-box';
@@ -101,5 +111,6 @@ export function initProjects() {
     viewAllBtn.setAttribute('aria-expanded', String(!isExpanded));
     expandedSection.hidden = isExpanded;
     viewAllBtn.textContent = isExpanded ? 'View All Projects' : 'Show Fewer Projects';
+    refreshScrollTrigger();
   });
 }

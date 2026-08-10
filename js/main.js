@@ -1,5 +1,4 @@
 import { initHeroScene } from './hero-scene.js';
-import { initScrollReveals, initEducationTimeline, initProjectsPinnedReveal } from './scroll-animations.js';
 import { initProjects } from './projects.js';
 import { initSkills } from './skills.js';
 
@@ -7,7 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroScene(document.getElementById('hero-canvas'));
   initProjects();
   initSkills();
-  initEducationTimeline();
-  initProjectsPinnedReveal();
-  initScrollReveals();
+
+  // scroll-animations.js does a top-level CDN import of GSAP/ScrollTrigger.
+  // Load it dynamically so a failed CDN fetch only degrades scroll-motion
+  // features instead of blanking the content rendered above.
+  import('./scroll-animations.js')
+    .then(({ initEducationTimeline, initProjectsPinnedReveal, initScrollReveals }) => {
+      initEducationTimeline();
+      initProjectsPinnedReveal();
+      initScrollReveals();
+    })
+    .catch((err) => console.error('Scroll animations unavailable:', err));
 });

@@ -35,7 +35,7 @@ export function initEducationTimeline(sectionSelector = '#education') {
   const milestones = section.querySelectorAll('.timeline-milestone');
   if (milestones.length === 0) return;
 
-  if (!canUseComplexMotion()) {
+  if (!canUseComplexMotion() || section.offsetHeight > window.innerHeight) {
     milestones.forEach((m) => m.classList.add('is-visible'));
     return;
   }
@@ -82,7 +82,7 @@ export function initProjectsPinnedReveal(sectionSelector = '#featured-projects')
     scrollTrigger: {
       trigger: section,
       start: 'top 75%',
-      end: 'bottom 60%',
+      end: '+=300',
       pin: true,
       pinSpacing: true,
       scrub: false,

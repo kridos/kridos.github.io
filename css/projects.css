@@ -13,13 +13,13 @@
   transform: translateY(-2px);
 }
 
-.project-box h3 {
+.project-box .project-content h3 {
   font-family: var(--font-heading);
   color: var(--color-fg);
   font-size: 1.1rem;
 }
 
-.project-box p {
+.project-box .project-content p {
   color: var(--color-fg-muted);
   font-family: var(--font-body);
   margin-top: var(--space-2);

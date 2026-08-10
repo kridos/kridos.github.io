@@ -1,4 +1,15 @@
 import { skillCategories } from './data/skills.js';
+import { canUseComplexMotion } from './motion-utils.js';
+
+async function refreshScrollTrigger() {
+  if (!canUseComplexMotion()) return;
+  try {
+    const { default: ScrollTrigger } = await import('https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js');
+    ScrollTrigger.refresh();
+  } catch (err) {
+    console.error('ScrollTrigger refresh unavailable:', err);
+  }
+}
 
 function renderCategory(category) {
   const wrapper = document.createElement('div');
@@ -32,5 +43,6 @@ export function initSkills() {
     toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
     moreContainer.hidden = isExpanded;
     toggleBtn.textContent = isExpanded ? 'Show More Skills' : 'Show Fewer Skills';
+    refreshScrollTrigger();
   });
 }
