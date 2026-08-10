@@ -1,0 +1,31 @@
+.home {
+  position: relative;
+  overflow: hidden;
+}
+
+.home-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.home-content,
+.home-sci {
+  position: relative;
+  z-index: 1;
+}
+
+.home-content h1 .hero-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-canvas {
+    display: none;
+  }
+}

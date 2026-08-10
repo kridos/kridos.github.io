@@ -1,0 +1,139 @@
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-body);
+}
+
+.heading {
+  font-family: var(--font-heading);
+}
+
+.heading span {
+  color: var(--color-accent);
+}
+
+.btn {
+  font-family: var(--font-heading);
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  border: none;
+  border-radius: 999px;
+  padding: 1.2rem 2.8rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(34, 211, 238, 0.25);
+}
+
+.gsap-reveal {
+  will-change: transform, opacity;
+}
+
+/* The original template's box-cover scroll-reveal (dark rectangles that
+   shrink away) depends on fragile offsetTop-based "current section"
+   tracking in js/script.js. Our GSAP reveals (js/scroll-animations.js)
+   replaced this for the new components; the leftover cover elements from
+   the original template now just get stuck mid-transition. Disable them. */
+.animate.scroll {
+  display: none;
+}
+
+/* Same fragile show-animate-gated cover pattern as .animate.scroll, just
+   implemented as a ::before gradient overlay on project cards instead of a
+   sibling span. Disable it and strip the old card's own box-shadow/padding
+   so the new .project-box card (css/projects.css) is the only visible box
+   — otherwise the two nest and read as a "double card". */
+.project-box .project-content::before {
+  display: none;
+}
+
+.project-box .project-content,
+.project-box .project-content:hover {
+  padding: 0;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Individual contact fields get their own accent-colored box (see
+   css/style.css .input-field/.textarea-field rules) rather than one card
+   behind the whole form. */
+.contact form .input-box .input-field input,
+.contact form .textarea-field textarea {
+  background: var(--color-surface);
+  border-color: var(--color-accent);
+}
+
+.contact form .focus {
+  background: var(--color-surface);
+}
+
+.home {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.home-sci {
+  position: static;
+  width: auto;
+  display: flex;
+  gap: 1.8rem;
+  margin-top: 2.5rem;
+}
+
+/* The hero's cover-reveal cascade (kept — it's the effect you like) used a
+   0.3s-per-item delay multiplier inherited from the header's timing, which
+   stacked into a couple of seconds of wait across 6 hero elements before
+   the last one (the social icons) finished uncovering. Tighten pacing for
+   just the hero so the same effect resolves noticeably sooner. */
+.home .animate {
+  animation-duration: 0.4s;
+  animation-delay: calc(0.12s * var(--i));
+}
+
+/* The role-line typing effect (.text-animate) had its own separate,
+   hardcoded 2s animation-delay in css/style.css — independent of the
+   cover-reveal cascade above — which left "Robotics & AI/ML Enthusiast"
+   sitting blank for a full 2 seconds after the rest of the hero had
+   already appeared. Cut that down; the effect itself is untouched. */
+.home.show-animate .home-content .text-animate h3,
+.home.show-animate .home-content .text-animate h3::before {
+  animation-delay: 0.5s;
+}
+
+/* css/style.css sets a global `outline: none`; restore visible keyboard focus
+   for nav links, buttons, filter pills, and project cards. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 500px;
+  height: 500px;
+  margin-left: -250px;
+  margin-top: -250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.09), transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none) {
+  .cursor-glow {
+    display: none;
+  }
+}

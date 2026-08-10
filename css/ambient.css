@@ -1,0 +1,164 @@
+/* Passive, always-running motion attached to one specific component per
+   section — same idea as the hero's particle field and the About photo's
+   spinning ring, not a generic background effect repeated everywhere.
+   Each section gets its own distinct technique so they don't read as
+   copies of each other. */
+
+/* Journey: the CURRENTLY ACTIVE timeline dot (tracked via IntersectionObserver
+   in js/effects.js, toggling .is-active as it crosses the viewport center)
+   pulses with a radar-style ring; inactive dots stay quiet. Deliberately
+   does NOT set `position` on .timeline-dot itself — that's already
+   `position: absolute` in css/timeline.css, which is what actually anchors
+   it to the line; redeclaring it here previously fought that rule. */
+.timeline-dot::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--color-accent-alt);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.timeline-milestone-wrap.is-active .timeline-dot::after {
+  animation: timelinePulse 1.8s ease-out infinite;
+}
+
+@keyframes timelinePulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* Projects: a slowly rotating gradient traces each card's edge.
+   Technique: two background layers on one pseudo-element, separated by a
+   transparent border — the solid fill is clipped to padding-box (inside
+   the border), the animated conic-gradient is clipped to border-box
+   (the full box), so the gradient only ever shows through the thin
+   border ring, never the center. The angle rotates via a registered
+   custom property (@property) so the browser can smoothly interpolate
+   it — a plain `transform: rotate()` was tried first, but rotating the
+   whole rectangular gradient layer swings its corners far outside the
+   card on every turn instead of keeping a fixed ring in place. */
+@property --border-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.project-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+    conic-gradient(
+      from var(--border-angle),
+      var(--color-accent),
+      var(--color-accent-alt) 50%,
+      var(--color-accent) 100%
+    ) border-box;
+  animation: rotateBorderAngle 5s linear infinite;
+}
+
+@keyframes rotateBorderAngle {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+/* Skills: a thin gradient light continuously flows along the underline of
+   each category title — distinct from both the pulse (Journey) and the
+   rotating border (Projects). */
+.skill-category h3 {
+  position: relative;
+  padding-bottom: 0.7rem;
+}
+
+.skill-category h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-accent), var(--color-accent-alt), transparent);
+  background-size: 200% 100%;
+  animation: flowUnderline 3.5s linear infinite;
+}
+
+@keyframes flowUnderline {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Contact: the Submit button breathes with an inviting pulse ring. The
+   ring lives on the .btn-box.btns wrapper, not the button itself — the
+   button has its own overflow: hidden (css/style.css, for its hover-fill
+   sweep effect) which would otherwise clip the ring the moment it grows
+   past the button's edge. */
+.contact form .btn-box.btns {
+  position: relative;
+}
+
+/* A filled, blurred glow — not a thin ring outline — scaled uniformly via
+   `transform` (not a box-shadow spread, which grows by the same pixel
+   amount on every side and doesn't preserve a shape's width:height ratio
+   as it grows). Scaling the filled shape itself keeps it geometrically
+   similar to the button at every frame, same technique as the Journey
+   timeline dot's pulse, but reads as the button's own color permeating
+   outward rather than a hard edge. border-radius here is 0.8rem to match
+   the button's actual computed radius (css/style.css
+   `.btn-box .btn { border-radius: .8rem }`, more specific than — and
+   overriding — the 999px pill radius on the base `.btn` class in
+   css/layout.css) — a rounded rectangle, not a pill. */
+.contact form .btn-box.btns::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 0.8rem;
+  background: var(--color-accent);
+  filter: blur(5px);
+  opacity: 0;
+  pointer-events: none;
+  animation: submitPulse 2.6s ease-out infinite;
+}
+
+@keyframes submitPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-milestone-wrap.is-active .timeline-dot::after,
+  .project-box::before,
+  .skill-category h3::after,
+  .contact form .btn-box.btns::after {
+    animation: none;
+  }
+
+  /* .project-box::before is NOT hidden here (unlike the other three) —
+     it's also the card's actual border/fill, not purely decorative;
+     disabling its animation above already leaves it as a static ring. */
+  .timeline-dot::after {
+    display: none;
+  }
+}

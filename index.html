@@ -7,7 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Website</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/tokens.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/projects.css">
+    <link rel="stylesheet" href="css/skills.css">
+    <link rel="stylesheet" href="css/timeline.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/ambient.css">
 
     <!-- box icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -28,7 +38,7 @@
         <nav class="navbar">
             <a href="#home" class="active">Home</a>
             <a href="#about">About</a>
-            <a href="#education">Education</a>
+            <a href="#education">Journey</a>
             <a href="#projects">Projects</a>
             <a href="#skills">Skills</a>
             <a href="#contact">Contact</a>
@@ -40,6 +50,7 @@
 
     <!-- home section design -->
     <section class="home show-animate" id="home">
+        <canvas class="home-canvas" id="hero-canvas" aria-hidden="true"></canvas>
         <div class="home-content">
             <h1>Hi, I'm <span>Krish Doshi</span><span class="animate" style="--i:2;"></span></h1>
             <div class="text-animate">
@@ -79,13 +90,13 @@
     <section class="about" id="about">
         <h2 class="heading">About <span>Me</span><span class="animate scroll" style="--i:1;"></span></h2>
 
-        <div class="about-img">
+        <div class="about-img gsap-reveal">
             <img src="images/about.jpg" alt="">
             <span class="circle-spin"></span>
             <span class="animate scroll" style="--i:2;"></span>
         </div>
 
-        <div class="about-content">
+        <div class="about-content gsap-reveal">
             <h3>Robotics & AI/ML Enthusiast<span class="animate scroll" style="--i:3;"></span></h3>
             <p>
                 I'm a Computer Science and Statistics (Data Science) student at the University of
@@ -110,96 +121,82 @@
     <section class="education" id="education">
         <h2 class="heading">My <span>Journey</span><span class="animate scroll" style="--i:1;"></span></h2>
 
-        <div class="education-row">
-            <div class="education-column">
-                <h3 class="title">Education<span class="animate scroll" style="--i:2;"></span></h3>
+        <div class="timeline">
+            <div class="timeline-line"><div class="timeline-line-fill"></div></div>
 
-                <div class="education-box">
-                    <div class="education-content">
-                        <div class="content">
-                            <div class="year"><i class='bx bxs-calendar'></i>2024 to 2028</div>
-                            <h3>Bachelor's Degree - University of Washington</h3>
-                            <p>
-                                <strong>Double Major:</strong> Computer Science & Statistics (Data Science)
-                            </p>
-                            <p><strong>Relevant Coursework:</strong></p>
-                            <ul class="coursework-list">
-                                <li>Data Structures & Parallelism (CSE 332)</li>
-                                <li>Foundations of Computing (CSE 311)</li>
-                                <li>The Hardware/Software Interface (CSE 351)</li>
-                                <li>Software Design and Implementation (CSE 331)</li>
-                                <li>Elements of Statistical Methods (STAT 311)</li>
-                                <li>Probability 1 (MATH 394)</li>
-                                <li>Linear Algebra (MATH 208)</li>
-                                <li>Differential Equations (MATH 207)</li>
-                                <li>Calculus 3 (MATH 126)</li>
-                                <li>Calculus 4 (MATH 224)</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!--
-                    <div class="education-content">
-                        <div class="content">
-                            <div class="year"><i class='bx bxs-calendar'></i>year to year</div>
-                            <h3>Other Thing</h3>
-                            <p> Placeholder text</p>
-                        </div>
-                    </div>
-
-                    <div class="education-content">
-                        <div class="content">
-                            <div class="year"><i class='bx bxs-calendar'></i>year to year</div>
-                            <h3>More other thing</h3>
-                            <p> Placeholder text</p>
-                        </div>
-                    </div>
-                -->
-
-                    <span class="animate scroll" style="--i:3;"></span>
+            <div class="timeline-milestone-wrap">
+                <span class="timeline-dot"></span>
+                <div class="timeline-milestone">
+                    <span class="timeline-type">Experience</span>
+                    <div class="year"><i class='bx bxs-calendar'></i>Jun 2022 to Sep 2022</div>
+                    <h3>Industrility — Machine Health and Safety Intern</h3>
+                    <p>Seattle, WA</p>
+                    <ul>
+                        <li>Implemented real-time machine monitoring using MQTT with AWS IoT (TLS mutual authentication)</li>
+                        <li>Prototyped firmware on microcontrollers (ESP32 / Arduino / M5Stack Core2) to ensure machine safety</li>
+                        <li>Safety prototype recognized at the Hannover Messe trade show</li>
+                    </ul>
                 </div>
             </div>
 
+            <div class="timeline-milestone-wrap">
+                <span class="timeline-dot"></span>
+                <div class="timeline-milestone">
+                    <span class="timeline-type">Education</span>
+                    <div class="year"><i class='bx bxs-calendar'></i>2024 to 2028</div>
+                    <h3>Bachelor's Degree — University of Washington</h3>
+                    <p><strong>Double Major:</strong> Computer Science & Statistics (Data Science)</p>
+                    <p><strong>Relevant Coursework:</strong></p>
+                    <ul class="coursework-list">
+                        <li>Data Structures & Parallelism (CSE 332)</li>
+                        <li>Foundations of Computing (CSE 311)</li>
+                        <li>The Hardware/Software Interface (CSE 351)</li>
+                        <li>Software Design and Implementation (CSE 331)</li>
+                        <li>Elements of Statistical Methods (STAT 311)</li>
+                        <li>Probability 1 (MATH 394)</li>
+                        <li>Linear Algebra (MATH 208)</li>
+                        <li>Differential Equations (MATH 207)</li>
+                        <li>Calculus 3 (MATH 126)</li>
+                        <li>Calculus 4 (MATH 224)</li>
+                    </ul>
+                </div>
+            </div>
 
-            <div class="education-column">
-                <h3 class="title">Experience<span class="animate scroll" style="--i:5;"></span></h3>
+            <div class="timeline-milestone-wrap">
+                <span class="timeline-dot"></span>
+                <div class="timeline-milestone">
+                    <span class="timeline-type">Experience</span>
+                    <div class="year"><i class='bx bxs-calendar'></i>Sep 2025 to Present</div>
+                    <h3>Personal Robotics Lab, UW — Undergraduate Research Assistant</h3>
+                    <ul>
+                        <li>Developed ROS nodes to process RGB/depth images and generate partial point clouds for downstream perception and manipulation tasks</li>
+                        <li>Worked with camera calibration, coordinate frames, and sensor synchronization to project 2D image data into 3D space</li>
+                        <li>Integrating a 6DOF robot arm into Isaac Lab/Arena for physics-based simulation and reinforcement learning research</li>
+                    </ul>
+                </div>
+            </div>
 
-                <div class="education-box">
-                    <div class="education-content">
-                        <div class="content">
-                            <div class="year"><i class='bx bxs-calendar'></i>2022 to 2022</div>
-                            <h3>Industrility - Machine Health and Safety Intern</h3>
-                            <p>
-                                Seattle, WA <br>
-                            <ul>
-                                <li>Developed firmware and cloud integration for industrial sensor nodes</li>
-                                <li>Implemented MQTT communication with AWS IoT Core</li>
-                                <li>Overcame hardware driver challenges and optimized performance</li>
-                            </ul>
+            <div class="timeline-milestone-wrap">
+                <span class="timeline-dot"></span>
+                <div class="timeline-milestone">
+                    <span class="timeline-type">Experience</span>
+                    <div class="year"><i class='bx bxs-calendar'></i>Oct 2025 to Dec 2025</div>
+                    <h3>Provn — Software Engineering Intern</h3>
+                    <ul>
+                        <li>Migrated the frontend routing system from Wouter to React Router, improving navigation structure and long-term support</li>
+                        <li>Contributed to planning for a transition to SSR/SSG to improve performance and SEO</li>
+                        <li>Gained production codebase experience balancing engineering velocity, technical debt, and scalability</li>
+                    </ul>
+                </div>
+            </div>
 
-                            </p>
-                        </div>
-                    </div>
-
-                    <!--
-                    <div class="education-content">
-                        <div class="content">
-                            <div class="year"><i class='bx bxs-calendar'></i>year to year</div>
-                            <h3>Other Thing</h3>
-                            <p> Placeholder text</p>
-                        </div>
-                    </div>
-
-                    <div class="education-content">
-                        <div class="content">
-                            <div class="year"><i class='bx bxs-calendar'></i>year to year</div>
-                            <h3>More other thing</h3>
-                            <p> Placeholder text</p>
-                        </div>
-                    </div>
-                    -->
-
-                    <span class="animate scroll" style="--i:6;"></span>
+            <div class="timeline-milestone-wrap">
+                <span class="timeline-dot"></span>
+                <div class="timeline-milestone">
+                    <span class="timeline-type">Experience</span>
+                    <div class="year"><i class='bx bxs-calendar'></i>Jun 2026 to Present</div>
+                    <h3>Cyco AI — AI-Assisted Development Intern</h3>
+                    <p>Issaquah, WA</p>
                 </div>
             </div>
         </div>
@@ -210,127 +207,18 @@
     <section class="projects" id="projects">
         <h2 class="heading">My <span>Projects</span><span class="animate scroll" style="--i:1;"></span></h2>
 
-        <div class="projects-row">
+        <div class="projects-row" id="featured-projects"></div>
 
-            <div class="project-box" onclick="window.open('https://github.com/kridos/husky-band-chat', '_blank')">
-                <div class="project-content">
-
-                    <h3>Music Voice Assistant</h3>
-                    <p> A full-stack, real-time AI assistant that uses a custom API and fine-tuned large language models to 
-                        provide spoken, accurate answers to complex questions about music notation and theory (IN PROGRESS).
-                    </p>
-                </div>
-                <span class="animate scroll" style="--i:2;"></span>
-            </div>
-
-            <div class="project-box" onclick="window.open('https://github.com/kridos/MarchingShowPlanner', '_blank')">
-                <div class="project-content">
-
-                    <h3>Marching Show Planner</h3>
-                    <p>An interactive application for designing and simulating marching band shows, enabling precise
-                        control over performer movement along linear, curved, and circular paths with time-based
-                        animation and user-defined parameters (IN PROGRESS).</p>
-                </div>
-                <span class="animate scroll" style="--i:3;"></span>
-            </div>
-
-            <div class="project-box"
-                onclick="window.open('https://github.com/kridos/Handwritten_Digits_Neural_Network', '_blank')">
-                <div class="project-content">
-
-                    <h3>MNIST Neural Network</h3>
-                    <p>A neural network built from scratch in Python using NumPy to recognize handwritten digits from
-                        the MNIST dataset.</p>
-                </div>
-                <span class="animate scroll" style="--i:4;"></span>
-            </div>
-
-
-
-
-
+        <div class="projects-more-controls">
+            <button type="button" class="btn" id="view-all-projects-btn" aria-expanded="false" aria-controls="expanded-projects">
+                View All Projects
+            </button>
         </div>
 
-        <div class="projects-row">
-
-            <div class="project-box" onclick="window.open('https://github.com/kridos/Crescendo2024', '_blank')">
-                <div class="project-content">
-
-                    <h3>FRC 2024 Robot Code</h3>
-                    <p>A control system for the FRC 2024 Crescendo robot using Java and WPILib, featuring game-optimized
-                        logic and integrated sensor feedback.</p>
-
-                </div>
-                <span class="animate scroll" style="--i:2;"></span>
-            </div>
-
-            <div class="project-box" onclick="window.open('https://github.com/kridos/ScoutingApp2024', '_blank')">
-                <div class="project-content">
-
-                    <h3>Crescendo Scout </h3>
-                    <p>A mobile app for offline FRC scouting that collects, stores, and shares team data via QR codes
-                        for efficient analysis and collaboration.</p>
-                </div>
-                <span class="animate scroll" style="--i:3;"></span>
-            </div>
-
-            <div class="project-box" onclick="window.open('https://github.com/kridos/ScoutingReceiver2024', '_blank')">
-                <div class="project-content">
-                    <h3>Crescendo Receiver</h3>
-                    <p>A desktop app that scans QR codes from Crescendo Scout to compile, store, and display scouting
-                        data in a table for match strategy.</p>
-                </div>
-
-                <span class="animate scroll" style="--i:4;"></span>
-
-            </div>
+        <div class="expanded-projects" id="expanded-projects" hidden>
+            <div class="category-filters" id="category-filters"></div>
+            <div class="projects-row projects-grid" id="expanded-projects-grid"></div>
         </div>
-
-
-
-            <!--Eventually move the following two into their own row-->
-            <div class="projects-row">
-                <div class="project-box"
-                    onclick="window.open('https://github.com/kridos/FtcRobotController/tree/Power-Play-Talons', '_blank')">
-                    <div class="project-content">
-
-                        <h3>FTC 2022-2023 Robot Code</h3>
-                        <p>A control system code for our FIRST Tech Challenge (FTC) Freight Frenzy (2022) and Power Play
-                            (2023) robots, integrating autonomous routines, sensor feedback, and precise motor control
-                            for
-                            competition.</p>
-
-                    </div>
-                    <span class="animate scroll" style="--i:2;"></span>
-                </div>
-
-                <div class="project-box" onclick="window.open('https://github.com/kridos/WaForgeHackathon', '_blank')">
-                    <div class="project-content">
-                        <h3>FoodSpect App</h3>
-                        <p>A mobile app that scans barcodes and uses the Open Food Facts API to instantly flag allergens
-                            based on personalized user profiles.</p>
-                    </div>
-
-                    <span class="animate scroll" style="--i:3;"></span>
-
-                </div>
-
-                <div class="project-box" onclick="window.open('https://github.com/kridos/UnoFinal', '_blank')">
-                    <div class="project-content">
-
-                        <h3>UNO</h3>
-                        <p>A Java-based UNO game built in Android Studio featuring multi-player gameplay or
-                            single-player
-                            gameplay with a bot for offline gameplay.</p>
-
-                    </div>
-                    <span class="animate scroll" style="--i:4;"></span>
-                </div>
-
-            </div>
-        </div>
-
-
     </section>
 
 
@@ -404,78 +292,19 @@
         </div>
     </section> -->
 
+    <!-- skills section design -->
     <section class="skills" id="skills">
         <h2 class="heading">My <span>Skills</span><span class="animate scroll" style="--i:1;"></span></h2>
 
-        <div class="skills-row">
-            <div class='skills-column'>
-                <h3 class="title">Programming Languages<span class="animate scroll" style="--i:2;"></span></h3>
-                <div class="skills-box">
-                    <div class="skills-content">
-                        <div class="progress">
-                            <h3>Java <span>90%</span></h3>
-                            <div class="bar" style="--width: 90%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Python <span>80%</span></h3>
-                            <div class="bar" style="--width: 80%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>C <span>70%</span></h3>
-                            <div class="bar" style="--width: 70%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>C++ <span>65%</span></h3>
-                            <div class="bar" style="--width: 65%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>SQL <span>60%</span></h3>
-                            <div class="bar" style="--width: 60%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>HTML/CSS <span>75%</span></h3>
-                            <div class="bar" style="--width: 75%;"><span></span></div>
-                        </div>
-                    </div>
-                    <span class="animate scroll" style="--i:3;"></span>
-                </div>
-            </div>
+        <div class="skills-categories" id="skills-categories"></div>
 
-            <div class='skills-column'>
-                <h3 class="title">Professional Skills<span class="animate scroll" style="--i:4;"></span></h3>
-                <div class="skills-box">
-                    <div class="skills-content">
-                        <div class="progress">
-                            <h3>Leadership <span>80%</span></h3>
-                            <div class="bar" style="--width: 80%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Problem Solving <span>80%</span></h3>
-                            <div class="bar" style="--width: 80%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Teamwork <span>80%</span></h3>
-                            <div class="bar" style="--width: 80%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Communication/Public Speaking <span>85%</span></h3>
-                            <div class="bar" style="--width: 85%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Cloud Integration <span>70%</span></h3>
-                            <div class="bar" style="--width: 70%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Data Analysis <span>70%</span></h3>
-                            <div class="bar" style="--width: 70%;"><span></span></div>
-                        </div>
-                    </div>
-                    <span class="animate scroll" style="--i:5;"></span>
-                </div>
-            </div>
-
-
+        <div class="skills-more-controls">
+            <button type="button" class="btn" id="show-more-skills-btn" aria-expanded="false" aria-controls="skills-categories-more">
+                Show More Skills
+            </button>
         </div>
+
+        <div class="skills-categories" id="skills-categories-more" hidden></div>
     </section>
 
     <!-- contact section design -->
@@ -486,7 +315,7 @@
 
             <input type="hidden" name="access_key" value="64730e17-42ea-48df-a3c3-60464b4a1a43">
 
-            <div class="input-box">
+            <div class="input-box gsap-reveal">
                 <div class="input-field">
                     <input type="text" name="name" placeholder="Full Name" required>
                     <span class="focus"></span>
@@ -500,7 +329,7 @@
                 <span class="animate scroll" style="--i:3;"></span>
             </div>
 
-            <div class="input-box">
+            <div class="input-box gsap-reveal">
                 <div class="input-field">
                     <input type="number" name="phone" placeholder="Mobile Number" required>
                     <span class="focus"></span>
@@ -514,7 +343,7 @@
                 <span class="animate scroll" style="--i:5;"></span>
             </div>
 
-            <div class="textarea-field">
+            <div class="textarea-field gsap-reveal">
                 <textarea id="" cols="30" rows="10" name="message" placeholder="Your Message" required></textarea>
                 <span class="focus"></span>
 
@@ -545,6 +374,7 @@
     </footer>
 
     <script src="js/script.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 
 

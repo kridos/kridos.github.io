@@ -1,0 +1,68 @@
+.skills-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 340px));
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.skills-categories[hidden] {
+  display: none;
+}
+
+.skill-category {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.skill-category h3 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: var(--color-accent);
+  margin-bottom: var(--space-3);
+}
+
+.skill-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skill-pill {
+  font-family: var(--font-body);
+  font-size: 1.4rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #2C3B5C;
+  color: var(--color-fg);
+  border: 1px solid #44577E;
+}
+
+.skills-more-controls {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-7) 0 var(--space-5);
+}
+
+/* Plain CSS transition for the toggle-revealed "more" categories — same
+   reasoning as the expanded project cards: guaranteed to play regardless
+   of scroll position when the toggle is clicked. */
+#skills-categories-more .skill-category {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 420ms ease, transform 420ms ease;
+}
+
+#skills-categories-more .skill-category.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
