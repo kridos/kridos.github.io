@@ -56,6 +56,10 @@
   margin: var(--space-5) 0;
 }
 
+.expanded-projects {
+  width: 100%;
+}
+
 .expanded-projects[hidden] {
   display: none;
 }

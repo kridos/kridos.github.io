@@ -36,3 +36,10 @@ body {
 .gsap-reveal {
   will-change: transform, opacity;
 }
+
+/* css/style.css sets a global `outline: none`; restore visible keyboard focus
+   for nav links, buttons, filter pills, and project cards. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}

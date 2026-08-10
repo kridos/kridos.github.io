@@ -5,6 +5,9 @@ function createProjectCard(project) {
   const card = document.createElement('div');
   card.className = 'project-box';
   card.dataset.category = project.category;
+  card.tabIndex = 0;
+  card.setAttribute('role', 'link');
+  card.setAttribute('aria-label', `Open ${project.title} on GitHub`);
   card.innerHTML = `
     <div class="project-content">
       <h3>${project.title}</h3>
@@ -14,7 +17,14 @@ function createProjectCard(project) {
       </div>
     </div>
   `;
-  card.addEventListener('click', () => window.open(project.url, '_blank'));
+  const openProject = () => window.open(project.url, '_blank', 'noopener');
+  card.addEventListener('click', openProject);
+  card.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openProject();
+    }
+  });
 
   if (canUseComplexMotion()) {
     let holdTimer = null;
