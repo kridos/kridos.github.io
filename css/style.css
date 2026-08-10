@@ -114,7 +114,7 @@ section {
 
 .home-content .text-animate {
     position: relative;
-    width: 45.7rem;
+    width: max-content;
 }
 
 .home-content .text-animate h3 {
@@ -122,10 +122,11 @@ section {
     font-weight: 700;
     color: transparent;
     -webkit-text-stroke: .7px var(--main-color);
-    background-image: linear-gradient(var(--main-color), var(--main-color));
+    background-image: linear-gradient(90deg, var(--main-color) 50%, transparent 50%);
     background-repeat: no-repeat;
+    background-size: 200% 100%;
     -webkit-background-clip: text;
-    background-position: -45.9rem 0;
+    background-position: 100% 0;
 }
 
 .home.show-animate .home-content .text-animate h3 {
@@ -1035,10 +1036,14 @@ span {
 
 .logo .animate,
 .navbar .animate,
-#menu-icon .animate,
-.home.show-animate .animate {
+#menu-icon .animate {
     animation: showRight .5s ease forwards;
     animation-delay: calc(.3s * var(--i));
+}
+
+/* Hero content shows immediately, no wipe-in reveal. */
+.home .animate {
+    display: none;
 }
 
 .animate.scroll {
@@ -1260,7 +1265,7 @@ section.contact .animate.scroll {
     0%,
     10%,
     100% {
-        background-position: -45.9rem 0;
+        background-position: 100% 0;
     }
 
     65%,

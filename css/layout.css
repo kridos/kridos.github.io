@@ -90,16 +90,6 @@ body {
   margin-top: 2.5rem;
 }
 
-/* The hero's cover-reveal cascade (kept — it's the effect you like) used a
-   0.3s-per-item delay multiplier inherited from the header's timing, which
-   stacked into a couple of seconds of wait across 6 hero elements before
-   the last one (the social icons) finished uncovering. Tighten pacing for
-   just the hero so the same effect resolves noticeably sooner. */
-.home .animate {
-  animation-duration: 0.4s;
-  animation-delay: calc(0.12s * var(--i));
-}
-
 /* The role-line typing effect (.text-animate) had its own separate,
    hardcoded 2s animation-delay in css/style.css — independent of the
    cover-reveal cascade above — which left "Robotics & AI/ML Enthusiast"
