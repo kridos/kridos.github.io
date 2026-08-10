@@ -35,4 +35,11 @@ withMatchMedia(
   }
 );
 
+withMatchMedia(
+  { '(hover: hover) and (pointer: fine)': true, '(prefers-reduced-motion: reduce)': true },
+  () => {
+    assert.equal(canUseComplexMotion(), false, 'complex motion disallowed when reduced motion is enabled, even on capable devices');
+  }
+);
+
 console.log('motion-utils.check.js: all assertions passed');
