@@ -113,24 +113,31 @@
   position: relative;
 }
 
+/* A bordered ring scaled uniformly via `transform`, not a box-shadow
+   spread — box-shadow's spread grows by the same pixel amount on every
+   side, which doesn't preserve a pill's width:height ratio as it grows
+   and reads as an oval instead of the button's actual stadium shape.
+   Scaling the ring itself keeps it geometrically similar to the button
+   at every frame, same technique as the Journey timeline dot's pulse. */
 .contact form .btn-box.btns::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 999px;
+  border: 2px solid var(--color-accent);
+  opacity: 0;
   pointer-events: none;
   animation: submitPulse 2.6s ease-out infinite;
 }
 
 @keyframes submitPulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.5);
-  }
-  70% {
-    box-shadow: 0 0 0 14px rgba(34, 211, 238, 0);
+    transform: scale(1);
+    opacity: 0.7;
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
+    transform: scale(1.3);
+    opacity: 0;
   }
 }
 
