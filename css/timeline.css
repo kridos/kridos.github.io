@@ -1,0 +1,41 @@
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 720px;
+  margin: var(--space-6) auto 0;
+}
+
+.timeline-milestone {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+}
+
+.timeline-milestone .year {
+  font-family: var(--font-heading);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.timeline-milestone h3 {
+  font-family: var(--font-heading);
+  color: var(--color-fg);
+}
+
+.timeline-milestone p,
+.timeline-milestone li {
+  color: var(--color-fg-muted);
+  font-family: var(--font-body);
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none) {
+  .timeline-milestone {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
