@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/hero.css">
     <link rel="stylesheet" href="css/projects.css">
+    <link rel="stylesheet" href="css/skills.css">
 
     <!-- box icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -302,78 +303,19 @@
         </div>
     </section> -->
 
+    <!-- skills section design -->
     <section class="skills" id="skills">
         <h2 class="heading">My <span>Skills</span><span class="animate scroll" style="--i:1;"></span></h2>
 
-        <div class="skills-row">
-            <div class='skills-column'>
-                <h3 class="title">Programming Languages<span class="animate scroll" style="--i:2;"></span></h3>
-                <div class="skills-box">
-                    <div class="skills-content">
-                        <div class="progress">
-                            <h3>Java <span>90%</span></h3>
-                            <div class="bar" style="--width: 90%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Python <span>80%</span></h3>
-                            <div class="bar" style="--width: 80%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>C <span>70%</span></h3>
-                            <div class="bar" style="--width: 70%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>C++ <span>65%</span></h3>
-                            <div class="bar" style="--width: 65%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>SQL <span>60%</span></h3>
-                            <div class="bar" style="--width: 60%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>HTML/CSS <span>75%</span></h3>
-                            <div class="bar" style="--width: 75%;"><span></span></div>
-                        </div>
-                    </div>
-                    <span class="animate scroll" style="--i:3;"></span>
-                </div>
-            </div>
+        <div class="skills-categories" id="skills-categories"></div>
 
-            <div class='skills-column'>
-                <h3 class="title">Professional Skills<span class="animate scroll" style="--i:4;"></span></h3>
-                <div class="skills-box">
-                    <div class="skills-content">
-                        <div class="progress">
-                            <h3>Leadership <span>80%</span></h3>
-                            <div class="bar" style="--width: 80%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Problem Solving <span>80%</span></h3>
-                            <div class="bar" style="--width: 80%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Teamwork <span>80%</span></h3>
-                            <div class="bar" style="--width: 80%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Communication/Public Speaking <span>85%</span></h3>
-                            <div class="bar" style="--width: 85%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Cloud Integration <span>70%</span></h3>
-                            <div class="bar" style="--width: 70%;"><span></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Data Analysis <span>70%</span></h3>
-                            <div class="bar" style="--width: 70%;"><span></span></div>
-                        </div>
-                    </div>
-                    <span class="animate scroll" style="--i:5;"></span>
-                </div>
-            </div>
-
-
+        <div class="skills-more-controls">
+            <button type="button" class="btn" id="show-more-skills-btn" aria-expanded="false" aria-controls="skills-categories-more">
+                Show More Skills
+            </button>
         </div>
+
+        <div class="skills-categories" id="skills-categories-more" hidden></div>
     </section>
 
     <!-- contact section design -->
