@@ -1,160 +1,135 @@
-/* Passive, always-running ambient motion for sections that otherwise only
-   animate once on scroll-in (the hero's particle field and the About
-   photo's spinning ring are the only continuously-alive elements
-   elsewhere). Two soft blurred gradient blobs drift slowly behind each
-   section's content — cheap (pure CSS transform, no JS) and never
-   interactive, so it can't get in the way of anything.
+/* Passive, always-running motion attached to one specific component per
+   section — same idea as the hero's particle field and the About photo's
+   spinning ring, not a generic background effect repeated everywhere.
+   Each section gets its own distinct technique so they don't read as
+   copies of each other. */
 
-   z-index: -1 relative to the section's own stacking context (each
-   section below has `position: relative`) paints the blobs above the
-   section's own solid background but below all normal in-flow content —
-   see CSS2.1 §E.2: negative z-index descendants paint after the box's own
-   background but before its in-flow children. */
-
-.about,
-.education,
-.projects,
-.skills,
-.contact {
+/* Journey: each timeline dot emits a continuous radar-style pulse ring,
+   like a live marker on the map of your career. */
+.timeline-dot {
   position: relative;
-  overflow: hidden;
 }
 
-.about::before,
-.about::after,
-.education::before,
-.education::after,
-.projects::before,
-.projects::after,
-.skills::before,
-.skills::after,
-.contact::before,
-.contact::after {
+.timeline-dot::after {
   content: '';
   position: absolute;
-  z-index: -1;
+  inset: -6px;
   border-radius: 50%;
-  filter: blur(70px);
-  opacity: 0.25;
+  border: 2px solid var(--color-accent);
+  animation: timelinePulse 2.4s ease-out infinite;
+}
+
+@keyframes timelinePulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Projects: a slowly rotating gradient ring traces each card's border
+   continuously, like the card is quietly "powered on". Stays fully inside
+   the card's own edge (mask technique) so it's never clipped. */
+.project-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--color-accent) 12%,
+    transparent 28%,
+    transparent 72%,
+    var(--color-accent-alt) 88%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
   pointer-events: none;
+  animation: rotateBorder 6s linear infinite;
 }
 
-.about::before {
-  width: 340px;
-  height: 340px;
-  top: -120px;
-  left: -100px;
-  background: radial-gradient(circle, var(--color-accent), transparent 70%);
-  animation: ambientDriftA 24s ease-in-out infinite;
+@keyframes rotateBorder {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.about::after {
-  width: 280px;
-  height: 280px;
-  bottom: -100px;
-  right: -80px;
-  background: radial-gradient(circle, var(--color-accent-alt), transparent 70%);
-  animation: ambientDriftB 28s ease-in-out infinite;
+/* Skills: a small "status light" pulses beside each category title, like
+   each skill area is actively online. */
+.skill-category h3 {
+  position: relative;
+  padding-left: 1.8rem;
 }
 
-.education::before {
-  width: 360px;
-  height: 360px;
-  top: -140px;
-  right: -100px;
-  background: radial-gradient(circle, var(--color-accent-alt), transparent 70%);
-  animation: ambientDriftC 26s ease-in-out infinite;
+.skill-category h3::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: statusPulse 2.4s ease-out infinite;
 }
 
-.education::after {
-  width: 300px;
-  height: 300px;
-  bottom: -120px;
-  left: -90px;
-  background: radial-gradient(circle, var(--color-accent), transparent 70%);
-  animation: ambientDriftA 30s ease-in-out infinite;
+@keyframes statusPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgba(34, 211, 238, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
+  }
 }
 
-.projects::before {
-  width: 380px;
-  height: 380px;
-  top: 10%;
-  left: -140px;
-  background: radial-gradient(circle, var(--color-accent), transparent 70%);
-  animation: ambientDriftB 25s ease-in-out infinite;
+/* Contact: the Submit button breathes with an inviting pulse ring,
+   drawing the eye toward the one action this section wants you to take. */
+.contact form .btn-box.btns .btn {
+  position: relative;
 }
 
-.projects::after {
-  width: 320px;
-  height: 320px;
-  bottom: -10%;
-  right: -120px;
-  background: radial-gradient(circle, var(--color-accent-alt), transparent 70%);
-  animation: ambientDriftC 22s ease-in-out infinite;
+.contact form .btn-box.btns .btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  animation: submitPulse 2.6s ease-out infinite;
 }
 
-.skills::before {
-  width: 340px;
-  height: 340px;
-  top: -110px;
-  left: 8%;
-  background: radial-gradient(circle, var(--color-accent-alt), transparent 70%);
-  animation: ambientDriftA 27s ease-in-out infinite;
-}
-
-.skills::after {
-  width: 300px;
-  height: 300px;
-  bottom: -100px;
-  right: 6%;
-  background: radial-gradient(circle, var(--color-accent), transparent 70%);
-  animation: ambientDriftB 23s ease-in-out infinite;
-}
-
-.contact::before {
-  width: 320px;
-  height: 320px;
-  top: -100px;
-  left: -80px;
-  background: radial-gradient(circle, var(--color-accent), transparent 70%);
-  animation: ambientDriftC 29s ease-in-out infinite;
-}
-
-.contact::after {
-  width: 280px;
-  height: 280px;
-  bottom: -90px;
-  right: -100px;
-  background: radial-gradient(circle, var(--color-accent-alt), transparent 70%);
-  animation: ambientDriftA 21s ease-in-out infinite;
-}
-
-@keyframes ambientDriftA {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(50px, 35px) scale(1.15); }
-}
-
-@keyframes ambientDriftB {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-45px, 30px) scale(0.9); }
-}
-
-@keyframes ambientDriftC {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(35px, -40px) scale(1.1); }
+@keyframes submitPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(34, 211, 238, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .about::before,
-  .about::after,
-  .education::before,
-  .education::after,
-  .projects::before,
-  .projects::after,
-  .skills::before,
-  .skills::after,
-  .contact::before,
-  .contact::after {
+  .timeline-dot::after,
+  .project-box::before,
+  .skill-category h3::before,
+  .contact form .btn-box.btns .btn::after {
     animation: none;
+  }
+
+  .timeline-dot::after {
+    display: none;
   }
 }
