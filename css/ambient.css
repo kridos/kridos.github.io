@@ -115,15 +115,18 @@
 
 /* A bordered ring scaled uniformly via `transform`, not a box-shadow
    spread — box-shadow's spread grows by the same pixel amount on every
-   side, which doesn't preserve a pill's width:height ratio as it grows
-   and reads as an oval instead of the button's actual stadium shape.
-   Scaling the ring itself keeps it geometrically similar to the button
-   at every frame, same technique as the Journey timeline dot's pulse. */
+   side, which doesn't preserve a shape's width:height ratio as it grows.
+   Scaling the ring itself keeps it geometrically similar to the button at
+   every frame, same technique as the Journey timeline dot's pulse.
+   border-radius here is 0.8rem to match the button's actual computed
+   radius (css/style.css `.btn-box .btn { border-radius: .8rem }`, more
+   specific than — and overriding — the 999px pill radius on the base
+   `.btn` class in css/layout.css) — a rounded rectangle, not a pill. */
 .contact form .btn-box.btns::after {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 999px;
+  border-radius: 0.8rem;
   border: 2px solid var(--color-accent);
   opacity: 0;
   pointer-events: none;
