@@ -43,7 +43,9 @@ body {
 }
 
 .header.sticky {
-    background: var(--color-bg)
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 .logo {
