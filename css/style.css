@@ -1035,11 +1035,13 @@ span {
     width: 50%;
 }
 
+/* The header sits transparent over the hero at load, so a solid wipe cover
+   here is a flat patch against the particle canvas instead of a clean reveal
+   over a real toolbar background. Match the hero's own "no wipe-in reveal". */
 .logo .animate,
 .navbar .animate,
 #menu-icon .animate {
-    animation: showRight .5s ease forwards;
-    animation-delay: calc(.3s * var(--i));
+    display: none;
 }
 
 /* Hero content shows immediately, no wipe-in reveal. */
