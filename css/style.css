@@ -115,10 +115,11 @@ section {
 .home-content .text-animate {
     position: relative;
     width: max-content;
+    max-width: 100%;
 }
 
 .home-content .text-animate h3 {
-    font-size: 3.2rem;
+    font-size: clamp(1.6rem, 4.7vw, 3.2rem);
     font-weight: 700;
     color: transparent;
     -webkit-text-stroke: .7px var(--main-color);

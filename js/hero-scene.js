@@ -1,8 +1,8 @@
 import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
-import { canUseComplexMotion } from './motion-utils.js';
+import { prefersReducedMotion } from './motion-utils.js';
 
 export function initHeroScene(canvas) {
-  if (!canvas || !canUseComplexMotion()) {
+  if (!canvas || prefersReducedMotion()) {
     return null;
   }
 
